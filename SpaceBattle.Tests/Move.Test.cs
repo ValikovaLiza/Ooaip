@@ -1,8 +1,8 @@
 namespace SpaceBattle.Tests;
-
 using System.Diagnostics.CodeAnalysis;
 using SpaceBattle;
 using TechTalk.SpecFlow;
+using Vector;
 
 [Binding]
 public class MoveTest
@@ -13,38 +13,38 @@ public class MoveTest
     [When("происходит прямолинейное равномерное движение без деформации")]
     public void CalculatedTheMovement()
     {
-        try 
+        try
         {
             location = spaceship.Execute();
         }
         catch (Exception e)
         {
-            
+
         }
     }
 
     [Given(@"космический корабль находится в точке пространства с координатами \((.*), (.*)\)")]
-    public void GivenThePosition(Vector loc) 
+    public void GivenThePosition(Vector loc)
     {
-        Vector v1= loc;
+        var v1 = loc;
     }
 
     [Given(@"имеет мгновенную скорость \((.*), (.*)\)")]
-    public void GivenSpeed(Vector vel) 
+    public void GivenSpeed(Vector vel)
     {
-        Vector v2= vel;
+        var v2 = vel;
     }
 
     [Given("изменить положение в пространстве космического корабля невозможно")]
-    public void NotSetPosition() 
+    public void NotSetPosition()
     {
-        
+
     }
 
     [Given("скорость корабля определить невозможно")]
-    public void NotSetSpeed() 
+    public void NotSetSpeed()
     {
-        
+
     }
 
 
@@ -53,5 +53,5 @@ public class MoveTest
     {
         location = spaceship.Execute(v1, v2);
     }
-    
+
 }
