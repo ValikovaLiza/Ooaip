@@ -46,6 +46,10 @@
               "target": "Package",
               "version": "[16.5.0, )"
             },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.69, )"
+            },
             "NUnit3TestAdapter": {
               "target": "Package",
               "version": "[3.17.0, )"

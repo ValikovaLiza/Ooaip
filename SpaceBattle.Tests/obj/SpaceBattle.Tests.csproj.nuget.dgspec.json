@@ -25,7 +25,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SpaceBattle.csproj": {
+                "projectPath": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SpaceBattle.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -41,6 +45,18 @@
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.7.1, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.69, )"
+            },
+            "SpecFlow": {
+              "target": "Package",
+              "version": "[3.9.74, )"
+            },
+            "SpecFlow.xUnit": {
+              "target": "Package",
+              "version": "[3.9.74, )"
             },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -75,7 +91,60 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SpaceBattle.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SpaceBattle.csproj",
+        "projectName": "SpaceBattle",
+        "projectPath": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SpaceBattle.csproj",
+        "packagesPath": "C:\\Users\\liza5\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\liza5\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -7,6 +7,7 @@ public class Vector
         get => _values[index];
         set => _values[index] = value;
     }
+    public int Size => _values.Length;
 
     public Vector(params int[] values)
     {
@@ -15,39 +16,16 @@ public class Vector
 
     public static Vector operator +(Vector v1, Vector v2)
     {
-        var _vector = new Vector(2);
-        _vector[0] = v1[0] + v2[0];
-        _vector[1] = v1[1] + v2[1];
-        return _vector;
+        v1._values[0] += v2._values[0];
+        v1._values[1] += v2._values[1];
+        return v1;
     }
 
-    public static Vector operator ==(Vector v1, Vector v2)
+    public static Vector operator -(Vector v1, Vector v2)
     {
-        var _vectorEq = new Vector(2);
-        if ((v1[0] == v2[0]) && (v1[1] == v2[1]))
-        {
-            _vectorEq[0] = 1;
-            _vectorEq[1] = 1;
-        }
-        else
-        {
-            _vectorEq[0] = 0;
-            _vectorEq[1] = 0;
-        }
-
-        return _vectorEq;
-    }
-
-    public static Vector operator !=(Vector v1, Vector v2)
-    {
-        var _vectorNEq = new Vector(2);
-        if ((v1[0] != v2[0]) || (v1[1] != v2[1]))
-        {
-            _vectorNEq[0] = 0;
-            _vectorNEq[1] = 0;
-        }
-
-        return _vectorNEq;
+        v1._values[0] -= v2._values[0];
+        v1._values[1] -= v2._values[1];
+        return v1;
     }
 
     public override string ToString()
@@ -55,18 +33,27 @@ public class Vector
         return $"<{string.Join(", ", _values)}>";
     }
 
-    public override bool Equals(object obj)
+    public static bool operator ==(Vector v1, Vector v2)
     {
-        if (ReferenceEquals(this, obj))
+        bool v1Null = ReferenceEquals(v1, null), v2Null = ReferenceEquals(v1, null);
+        if (v1Null || v2Null)
         {
-            return true;
+            return v1Null && v2Null;
         }
 
-        if (ReferenceEquals(obj, null))
-        {
-            return false;
-        }
+        return ReferenceEquals(v1, v2) || v1.Size == v2.Size && v1._values.SequenceEqual(v2._values);
+    }
 
+    public static bool operator !=(Vector v1, Vector v2)
+    {
+        return !(v1 == v2);
+    }
+    public override bool Equals(object? obj)
+    {
+        return obj is Vector vector && _values.SequenceEqual(vector._values);
+    }
+    public override int GetHashCode()
+    {
         throw new NotImplementedException();
     }
 }
