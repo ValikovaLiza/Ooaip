@@ -1,5 +1,5 @@
 ﻿namespace _IMovable;
-using Vector;
+using _Vector;
 
 public interface IMovable
 {

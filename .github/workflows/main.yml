@@ -2,6 +2,9 @@ name: Main
 
 on:
   push:
+    branches: ['Laba_1']
+  pull_request:
+    branches: ['main']
 
 jobs:
   build:

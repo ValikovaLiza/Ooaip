@@ -1,9 +1,9 @@
 ﻿namespace SpaceBattle.Tests;
 using _IMovable;
 using _SpaceBattle;
+using _Vector;
 using Moq;
 using TechTalk.SpecFlow;
-using Vector;
 
 [Binding]
 public class MoveTest
@@ -60,7 +60,7 @@ public class MoveTest
     }
 
     [Then(@"возникает ошибка Exception")]
-    public void Appearexeption()
+    public void AppearExeption()
     {
         Assert.Throws<Exception>(() => commandExecutionLambda());
     }

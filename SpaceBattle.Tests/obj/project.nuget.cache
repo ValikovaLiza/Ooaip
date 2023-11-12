@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "HIg7EbY852wdGilcqkQDr6qvWHZWQqbGidxdLOKcn7UkMUuVlhmxph+kgvkE2aH9fEEebH/yO8/MSycKeB8x0A==",
+  "dgSpecHash": "fpTkn3H5QHiu9/U82StgPS9WwNX5kzLfxHrzFyL3/hyeEAvGe2MuTIgaxQ4FoZIe0m5z5noU9h7hucrGoST//w==",
   "success": true,
   "projectFilePath": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle.Tests\\SpaceBattle.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\liza5\\.nuget\\packages\\bodi\\1.5.0\\bodi.1.5.0.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\coverlet.msbuild\\6.0.0\\coverlet.msbuild.6.0.0.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\gherkin\\19.0.3\\gherkin.19.0.3.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\microsoft.codecoverage\\17.7.1\\microsoft.codecoverage.17.7.1.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\1.0.3\\microsoft.dotnet.platformabstractions.1.0.3.nupkg.sha512",

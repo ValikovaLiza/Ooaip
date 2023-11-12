@@ -1,4 +1,4 @@
-﻿namespace Vector;
+﻿namespace _Vector;
 public class Vector
 {
     private readonly int[] _values;
@@ -11,41 +11,67 @@ public class Vector
 
     public Vector(params int[] values)
     {
-        _values = values ?? throw new ArgumentNullException(nameof(values));
+        if (values.Length == 0)
+        {
+            throw new ArgumentException();
+        }
+
+        _values = values;
     }
 
     public static Vector operator +(Vector v1, Vector v2)
     {
-        v1._values[0] += v2._values[0];
-        v1._values[1] += v2._values[1];
+        if (v1.Size != v2.Size)
+        {
+            throw new System.ArgumentException();
+        }
+
+        var i = 0;
+        var size = v1.Size;
+        while (i < size)
+        {
+            v1._values[i] += v2._values[i];
+            i++;
+        }
+
         return v1;
     }
 
     public static Vector operator -(Vector v1, Vector v2)
     {
-        v1._values[0] -= v2._values[0];
-        v1._values[1] -= v2._values[1];
-        return v1;
-    }
+        if (v1.Size != v2.Size)
+        {
+            throw new System.ArgumentException();
+        }
 
-    public override string ToString()
-    {
-        return $"<{string.Join(", ", _values)}>";
+        var i = 0;
+        var size = v1.Size;
+        while (i < size)
+        {
+            v1._values[i] -= v2._values[i];
+            i++;
+        }
+
+        return v1;
     }
 
     public static bool operator ==(Vector v1, Vector v2)
     {
-        bool v1Null = ReferenceEquals(v1, null), v2Null = ReferenceEquals(v1, null);
-        if (v1Null || v2Null)
+        if (v1.Size != v2.Size)
         {
-            return v1Null && v2Null;
+            throw new System.ArgumentException();
         }
 
-        return ReferenceEquals(v1, v2) || v1.Size == v2.Size && v1._values.SequenceEqual(v2._values);
+        return v1.Equals(v2);
     }
 
     public static bool operator !=(Vector v1, Vector v2)
     {
+        if (v1.Size != v2.Size)
+        {
+            throw new System.ArgumentException();
+        }
+
         return !(v1 == v2);
     }
     public override bool Equals(object? obj)
@@ -54,6 +80,6 @@ public class Vector
     }
     public override int GetHashCode()
     {
-        throw new NotImplementedException();
+        return 0;
     }
 }
