@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.9672" branch-rate="0.9375" version="1.9" timestamp="1699770953" lines-covered="59" lines-valid="61" branches-covered="15" branches-valid="16">
+<coverage line-rate="0.9672" branch-rate="1" version="1.9" timestamp="1699966881" lines-covered="59" lines-valid="61" branches-covered="16" branches-valid="16">
   <sources>
     <source>C:\Users\liza5\C#\Ooaip\SpaceBattle\</source>
   </sources>
   <packages>
-    <package name="SpaceBattle" line-rate="0.9672" branch-rate="0.9375" complexity="22">
+    <package name="SpaceBattle" line-rate="0.9672" branch-rate="1" complexity="22">
       <classes>
-        <class name="_Vector.Vector" filename="Vector.cs" line-rate="0.9629000000000001" branch-rate="0.9375" complexity="20">
+        <class name="_Vector.Vector" filename="Vector.cs" line-rate="0.9629000000000001" branch-rate="1" complexity="20">
           <methods>
             <method name="get_Item" signature="(System.Int32)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -101,15 +101,15 @@
                 <line number="76" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="Equals" signature="(System.Object)" line-rate="1" branch-rate="0.5" complexity="2">
+            <method name="Equals" signature="(System.Object)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="78" hits="9" branch="False" />
-                <line number="79" hits="9" branch="True" condition-coverage="50% (1/2)">
+                <line number="78" hits="11" branch="False" />
+                <line number="79" hits="11" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="9" type="jump" coverage="50%" />
+                    <condition number="9" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="80" hits="9" branch="False" />
+                <line number="80" hits="11" branch="False" />
               </lines>
             </method>
             <method name="GetHashCode" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -121,17 +121,17 @@
             </method>
             <method name=".ctor" signature="(System.Int32[])" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="12" hits="35" branch="False" />
-                <line number="13" hits="35" branch="False" />
-                <line number="14" hits="35" branch="True" condition-coverage="100% (2/2)">
+                <line number="12" hits="36" branch="False" />
+                <line number="13" hits="36" branch="False" />
+                <line number="14" hits="36" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="15" type="jump" coverage="100%" />
                   </conditions>
                 </line>
                 <line number="15" hits="1" branch="False" />
                 <line number="16" hits="1" branch="False" />
-                <line number="19" hits="34" branch="False" />
-                <line number="20" hits="34" branch="False" />
+                <line number="19" hits="35" branch="False" />
+                <line number="20" hits="35" branch="False" />
               </lines>
             </method>
           </methods>
@@ -201,27 +201,27 @@
             <line number="72" hits="1" branch="False" />
             <line number="75" hits="2" branch="False" />
             <line number="76" hits="2" branch="False" />
-            <line number="78" hits="9" branch="False" />
-            <line number="79" hits="9" branch="True" condition-coverage="50% (1/2)">
+            <line number="78" hits="11" branch="False" />
+            <line number="79" hits="11" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="9" type="jump" coverage="50%" />
+                <condition number="9" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="80" hits="9" branch="False" />
+            <line number="80" hits="11" branch="False" />
             <line number="82" hits="2" branch="False" />
             <line number="83" hits="2" branch="False" />
             <line number="84" hits="2" branch="False" />
-            <line number="12" hits="35" branch="False" />
-            <line number="13" hits="35" branch="False" />
-            <line number="14" hits="35" branch="True" condition-coverage="100% (2/2)">
+            <line number="12" hits="36" branch="False" />
+            <line number="13" hits="36" branch="False" />
+            <line number="14" hits="36" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="15" type="jump" coverage="100%" />
               </conditions>
             </line>
             <line number="15" hits="1" branch="False" />
             <line number="16" hits="1" branch="False" />
-            <line number="19" hits="34" branch="False" />
-            <line number="20" hits="34" branch="False" />
+            <line number="19" hits="35" branch="False" />
+            <line number="20" hits="35" branch="False" />
           </lines>
         </class>
         <class name="_SpaceBattle.MoveCommand" filename="MoveCommand.cs" line-rate="1" branch-rate="1" complexity="2">
