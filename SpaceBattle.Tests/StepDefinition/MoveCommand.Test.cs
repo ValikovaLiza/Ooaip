@@ -15,11 +15,6 @@ public class MoveTest
         _movable = new Mock<IMovable>();
     }
 
-    //public void CommandLambda()
-    //{
-    //    commandExecutionLambda = () => { };
-    //}
-
     [When("происходит прямолинейное равномерное движение без деформации")]
     public void CalculatedTheMovement()
     {
