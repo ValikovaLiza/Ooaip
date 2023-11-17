@@ -30,16 +30,6 @@ public class Vector
         return new Vector(v1._values.Zip(v2._values, (a, b) => a + b).ToArray());
     }
 
-    public static Vector operator -(Vector v1, Vector v2)
-    {
-        if (v1.Size != v2.Size)
-        {
-            throw new System.ArgumentException();
-        }
-
-        return new Vector(v1._values.Zip(v2._values, (a, b) => a - b).ToArray());
-    }
-
     public static bool operator ==(Vector v1, Vector v2)
     {
         if (v1.Size != v2.Size)
