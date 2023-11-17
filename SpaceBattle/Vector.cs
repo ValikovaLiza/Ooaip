@@ -21,20 +21,13 @@ public class Vector
 
     public static Vector operator +(Vector v1, Vector v2)
     {
+
         if (v1.Size != v2.Size)
         {
             throw new System.ArgumentException();
         }
 
-        var i = 0;
-        var size = v1.Size;
-        while (i < size)
-        {
-            v1._values[i] += v2._values[i];
-            i++;
-        }
-
-        return v1;
+        return new Vector(v1._values.Zip(v2._values, (a, b) => a + b).ToArray());
     }
 
     public static Vector operator -(Vector v1, Vector v2)
@@ -44,15 +37,7 @@ public class Vector
             throw new System.ArgumentException();
         }
 
-        var i = 0;
-        var size = v1.Size;
-        while (i < size)
-        {
-            v1._values[i] -= v2._values[i];
-            i++;
-        }
-
-        return v1;
+        return new Vector(v1._values.Zip(v2._values, (a, b) => a - b).ToArray());
     }
 
     public static bool operator ==(Vector v1, Vector v2)

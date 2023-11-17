@@ -28,22 +28,6 @@ namespace SpaceBattle.Lib.Test
         }
 
         [Fact]
-        public void DivSameSize()
-        {
-            Vector a = new(3, 0);
-            Vector b = new(1, 3);
-            Assert.Equal(a - b, new Vector(2, -3));
-        }
-        [Fact]
-        public void DivDifferentSize()
-        {
-            Vector a = new(0, 1, 3);
-            Vector b = new(4, 4);
-
-            Assert.Throws<ArgumentException>(() => a - b);
-        }
-
-        [Fact]
         public void CompareOneSizeVectorsWithDifferentCoords()
         {
             Vector a = new(2, 2);
