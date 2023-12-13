@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/RhxGABhMLVv8rF+l4MO6UJpjflzTq6bVKp3fyPqgvc/ZoBxd+Qk5U7mgsFU4e8oQ7A6pVm6b46zrr0W40LEBA==",
+  "dgSpecHash": "pVIbSrxAQMbGhkMxK4ipbrnhsBDWvlfQDgJpMWmrLIQeaWB1lZrNYtcERvJ0f9FPfHSAwaYL8NHs/Wf+j1eoCQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle.Tests\\SpaceBattle.Tests.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,10 @@
     "C:\\Users\\liza5\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\coverlet.msbuild\\6.0.0\\coverlet.msbuild.6.0.0.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\gherkin\\19.0.3\\gherkin.19.0.3.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.core\\1.0.0\\hwdtech.core.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.ioc\\1.0.0\\hwdtech.ioc.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.ioc.scopebasediocimplementation\\1.0.0\\hwdtech.ioc.scopebasediocimplementation.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.ioc.singlethreadscope\\1.0.0\\hwdtech.ioc.singlethreadscope.1.0.0.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\microsoft.codecoverage\\17.7.1\\microsoft.codecoverage.17.7.1.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\1.0.3\\microsoft.dotnet.platformabstractions.1.0.3.nupkg.sha512",
     "C:\\Users\\liza5\\.nuget\\packages\\microsoft.extensions.dependencymodel\\1.0.3\\microsoft.extensions.dependencymodel.1.0.3.nupkg.sha512",
