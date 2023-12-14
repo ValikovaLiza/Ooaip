@@ -1,4 +1,4 @@
-﻿namespace _IMovable;
+﻿namespace SpaceBattle;
 using _Vector;
 
 public interface IMovable

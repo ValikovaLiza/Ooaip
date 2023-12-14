@@ -1,5 +1,4 @@
-using Hwdtech;
-
+﻿using Hwdtech;
 namespace SpaceBattle;
 
 public class StartMoveCommand : ICommand
@@ -16,6 +15,6 @@ public class StartMoveCommand : ICommand
         _obj.Dict.ToList().ForEach(o => IoC.Resolve<ICommand>("Target.Register", _obj.UObject, o.Key, o.Value).Execute());
         var mCommand = IoC.Resolve<ICommand>("Moving.Commands", _obj.UObject);
         IoC.Resolve<ICommand>("Target.Register", _obj.UObject, "Moving.Commands", mCommand).Execute();
-        IoC.Resolve<IQueue>("Queue.Push").Add((_ICommand.ICommand)mCommand);
+        IoC.Resolve<IQueue>("Queue.Push").Add(mCommand);
     }
 }

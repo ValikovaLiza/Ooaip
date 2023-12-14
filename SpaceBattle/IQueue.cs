@@ -1,6 +1,4 @@
-using _ICommand;
-
-namespace SpaceBattle;
+﻿namespace SpaceBattle;
 
 public interface IQueue
 {
