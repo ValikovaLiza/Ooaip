@@ -39,10 +39,12 @@ public class StartMoveCommandTests
         var movingCommandMock = new Mock<SpaceBattle.ICommand>();
         var commandMock = new Mock<SpaceBattle.ICommand>();
         var queueMock = new Mock<IQueue>();
+        var injecMock = new Mock<SpaceBattle.ICommand>();
 
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Moving.Commands", (object[] args) => movingCommandMock.Object).Execute();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Target.Register", (object[] args) => commandMock.Object).Execute();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Queue.Push", (object[] args) => queueMock.Object).Execute();
+        IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Commands.Injectable", (object[] args) => injecMock.Object).Execute();
 
         _startMoveCommand.Execute();
 
