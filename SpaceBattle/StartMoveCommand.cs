@@ -16,6 +16,6 @@ public class StartMoveCommand : ICommand
         var mCommand = IoC.Resolve<ICommand>("Moving.Commands", _obj.UObject);
         var injectable = IoC.Resolve<ICommand>("Commands.Injectable", mCommand);
         IoC.Resolve<ICommand>("Target.Register", _obj.UObject, "Moving.Commands", mCommand).Execute();
-        IoC.Resolve<IQueue>("Queue.Push").Add(mCommand);
+        IoC.Resolve<IQueue>("Queue.Push", injectable).Add(mCommand);
     }
 }
