@@ -29,3 +29,13 @@ jobs:
 
       - name: Checkstyle
         run: dotnet format --verify-no-changes
+
+      - name: Upload report to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          flags: tests
+          name: codecov-placeholder-service
+          fail_ci_if_error: true
+          verbose: true
