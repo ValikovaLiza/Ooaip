@@ -36,10 +36,10 @@ public class StartMoveCommandTests
     [Fact]
     public void Execute_RegistersTargetsAndPushesMovingCommand_WhenCalled()
     {
-        var movingCommandMock = new Mock<SpaceBattle.ICommand>();
-        var commandMock = new Mock<SpaceBattle.ICommand>();
+        var movingCommandMock = new Mock<ICommand>();
+        var commandMock = new Mock<ICommand>();
         var queueMock = new Mock<IQueue>();
-        var injecMock = new Mock<SpaceBattle.ICommand>();
+        var injecMock = new Mock<ICommand>();
 
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Moving.Commands", (object[] args) => movingCommandMock.Object).Execute();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Target.Register", (object[] args) => commandMock.Object).Execute();
@@ -49,6 +49,6 @@ public class StartMoveCommandTests
         _startMoveCommand.Execute();
 
         _moveCommandStartableMock.Verify(m => m.Dict, Times.Once());
-        queueMock.Verify(q => q.Add(It.IsAny<SpaceBattle.ICommand>()), Times.Once());
+        queueMock.Verify(q => q.Add(It.IsAny<ICommand>()), Times.Once());
     }
 }
