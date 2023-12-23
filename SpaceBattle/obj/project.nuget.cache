@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "ZBFEMUv7d1em6m8oGnZaesu0hse/IOLJ9T8h2o5TH+NHpfovu6S7ZYMKs+SJ75kugLw2UFf7HjRT9FB1nRi47A==",
+  "dgSpecHash": "tF5/Xin0MmOfH76MHUmDF+vfxFWWAk0W31OjFGwD17AC/6GrLcwRKzCVdtUMbaAWLxWAPP7+4CVEgHdHM+sNLA==",
   "success": true,
   "projectFilePath": "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SpaceBattle.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\liza5\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.core\\1.0.0\\hwdtech.core.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.ioc\\1.0.0\\hwdtech.ioc.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.ioc.scopebasediocimplementation\\1.0.0\\hwdtech.ioc.scopebasediocimplementation.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\hwdtech.ioc.singlethreadscope\\1.0.0\\hwdtech.ioc.singlethreadscope.1.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\moq\\4.18.3\\moq.4.18.3.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
+    "C:\\Users\\liza5\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512"
+  ],
   "logs": []
 }

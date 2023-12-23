@@ -119,3 +119,7 @@ C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\obj\Debug\net7.0\refint\SpaceBattle.Te
 C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\obj\Debug\net7.0\SpaceBattle.Tests.pdb
 C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\obj\Debug\net7.0\SpaceBattle.Tests.genruntimeconfig.cache
 C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\obj\Debug\net7.0\ref\SpaceBattle.Tests.dll
+C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\bin\Debug\net7.0\Hwdtech.Core.dll
+C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\bin\Debug\net7.0\Hwdtech.IoC.dll
+C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\bin\Debug\net7.0\Hwdtech.Ioc.ScopeBasedIoCImplementation.dll
+C:\Users\liza5\C#\Ooaip\SpaceBattle.Tests\bin\Debug\net7.0\Hwdtech.Ioc.SingleThreadScope.dll

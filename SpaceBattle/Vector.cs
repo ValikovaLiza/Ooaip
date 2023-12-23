@@ -55,6 +55,6 @@ public class Vector
     }
     public override int GetHashCode()
     {
-        return 0;
+        return _values.GetHashCode();
     }
 }

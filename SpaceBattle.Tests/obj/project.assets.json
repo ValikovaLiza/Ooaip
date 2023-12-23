@@ -60,6 +60,54 @@
           }
         }
       },
+      "Hwdtech.Core/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Hwdtech.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Hwdtech.Core.dll": {}
+        }
+      },
+      "Hwdtech.IoC/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Hwdtech.Core": "1.0.0",
+          "System.Threading": "4.3.0"
+        },
+        "compile": {
+          "lib/net6.0/Hwdtech.IoC.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Hwdtech.IoC.dll": {}
+        }
+      },
+      "Hwdtech.Ioc.ScopeBasedIoCImplementation/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Hwdtech.Core": "1.0.0",
+          "Hwdtech.IoC": "1.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Hwdtech.Ioc.ScopeBasedIoCImplementation.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Hwdtech.Ioc.ScopeBasedIoCImplementation.dll": {}
+        }
+      },
+      "Hwdtech.Ioc.SingleThreadScope/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Hwdtech.Core": "1.0.0",
+          "Hwdtech.IoC": "1.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Hwdtech.Ioc.SingleThreadScope.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Hwdtech.Ioc.SingleThreadScope.dll": {}
+        }
+      },
       "Microsoft.CodeCoverage/17.7.1": {
         "type": "package",
         "compile": {
@@ -2074,6 +2122,13 @@
       "SpaceBattle/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Hwdtech.Core": "1.0.0",
+          "Hwdtech.IoC": "1.0.0",
+          "Hwdtech.Ioc.ScopeBasedIoCImplementation": "1.0.0",
+          "Hwdtech.Ioc.SingleThreadScope": "1.0.0",
+          "Moq": "4.18.3"
+        },
         "compile": {
           "bin/placeholder/SpaceBattle.dll": {}
         },
@@ -2255,6 +2310,54 @@
         "lib/net45/Gherkin.xml",
         "lib/netstandard2.0/Gherkin.dll",
         "lib/netstandard2.0/Gherkin.xml"
+      ]
+    },
+    "Hwdtech.Core/1.0.0": {
+      "sha512": "IZCpao5rQiJJj8lX9ttukIlljkC/qoOw7+qJ0RX6BRaLoVAxGSFH1m1Jbmg0jh2SrtffxR62BiAYn9nFjXFVMQ==",
+      "type": "package",
+      "path": "hwdtech.core/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hwdtech.core.1.0.0.nupkg.sha512",
+        "hwdtech.core.nuspec",
+        "lib/net6.0/Hwdtech.Core.dll"
+      ]
+    },
+    "Hwdtech.IoC/1.0.0": {
+      "sha512": "k8cQbUyJNYSMeDJMU7hA+eUCD4ApsxxeDOjm9K7p3nAh6PJpjuAsXwdTrJZPVKep7PA9kJyku7wlb6vgRBt/gQ==",
+      "type": "package",
+      "path": "hwdtech.ioc/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hwdtech.ioc.1.0.0.nupkg.sha512",
+        "hwdtech.ioc.nuspec",
+        "lib/net6.0/Hwdtech.IoC.dll"
+      ]
+    },
+    "Hwdtech.Ioc.ScopeBasedIoCImplementation/1.0.0": {
+      "sha512": "KHlvKmR6hPfRUbGnIgEfEMLKxQBUY07dGCVPoMHfRpb+GdjBLo6p1Q2N4pnINOCo4fLutThKSCtHYxtcVhI5YQ==",
+      "type": "package",
+      "path": "hwdtech.ioc.scopebasediocimplementation/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hwdtech.ioc.scopebasediocimplementation.1.0.0.nupkg.sha512",
+        "hwdtech.ioc.scopebasediocimplementation.nuspec",
+        "lib/net6.0/Hwdtech.Ioc.ScopeBasedIoCImplementation.dll"
+      ]
+    },
+    "Hwdtech.Ioc.SingleThreadScope/1.0.0": {
+      "sha512": "MwBZKxnAN54BfF8kQj/jXwrH6udNxZJVguwT1te4ZZN53WPGVml9jnUnd8LfdyP7MnfXM2VW4G/UQqgDs5dEFw==",
+      "type": "package",
+      "path": "hwdtech.ioc.singlethreadscope/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hwdtech.ioc.singlethreadscope.1.0.0.nupkg.sha512",
+        "hwdtech.ioc.singlethreadscope.nuspec",
+        "lib/net6.0/Hwdtech.Ioc.SingleThreadScope.dll"
       ]
     },
     "Microsoft.CodeCoverage/17.7.1": {
