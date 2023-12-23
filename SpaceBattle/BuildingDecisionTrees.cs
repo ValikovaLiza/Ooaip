@@ -33,7 +33,7 @@ public class BuildingDecisionTrees : ICommand
             throw new Exception(e.ToString());
         }
     }
-    
+
     private static void PutInTrees(List<int> list, IDictionary<int, object> root)
     {
         var trees = root;
