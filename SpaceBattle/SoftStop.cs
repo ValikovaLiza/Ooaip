@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using Hwdtech;
 
 namespace SpaceBattle;
@@ -16,8 +16,9 @@ public class SoftStop : _ICommand.ICommand
     }
     public void Execute()
     {
-        thread.UpdateBehavior(() => {
-            if (queue.Count !=0 )
+        thread.UpdateBehavior(() =>
+        {
+            if (queue.Count != 0)
             {
                 thread.Execute();
             }

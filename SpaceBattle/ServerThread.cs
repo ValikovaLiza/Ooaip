@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using Hwdtech;
 
 namespace SpaceBattle;
@@ -25,7 +25,7 @@ public class ServerThread
                 IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e);
             }
         };
-        _thread = new Thread(()=>
+        _thread = new Thread(() =>
         {
             while (!_stop)
             {

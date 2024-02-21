@@ -1,4 +1,4 @@
-using Hwdtech;
+﻿using Hwdtech;
 
 namespace SpaceBattle;
 public class HardStop : _ICommand.ICommand
