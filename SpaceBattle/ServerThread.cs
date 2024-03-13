@@ -45,4 +45,24 @@ public class ServerThread
     {
         _behavior = newBehavior;
     }
+    public override bool Equals(object obj)
+    {
+        
+        if (obj == null)
+        {
+            return false;
+        }
+
+        if (obj.GetType() == _thread.GetType())
+        {
+            return _thread == (Thread)obj;
+        }
+
+        if (GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        throw new NotImplementedException();
+    }
 }

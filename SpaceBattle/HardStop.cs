@@ -8,6 +8,13 @@ public class HardStop : _ICommand.ICommand
     }
     public void Execute()
     {
-        thread.Stop();
+        if (thread.Equals(Thread.CurrentThread))
+        {
+            thread.Stop();
+        }
+        else
+        {
+            throw new Exception("Wrong Thread");
+        }
     }
 }
