@@ -28,8 +28,8 @@ public class ServerThread
                 }
             }
         };
-        _thread = new Thread(() =>_behavior());
-        
+        _thread = new Thread(() => _behavior());
+
     }
 
     public void Execute()

@@ -10,12 +10,6 @@ public class ServerTheardTests
 
         new InitScopeBasedIoCImplementationCommand().Execute();
 
-        IoC.Resolve<ICommand>("Scopes.Current.Set",
-            IoC.Resolve<object>("Scopes.New",
-                IoC.Resolve<object>("Scopes.Root")
-            )
-        ).Execute();
-
         IoC.Resolve<ICommand>("IoC.Register",
             "Server.Commands.HardStop",
             (object[] args) =>
@@ -35,6 +29,7 @@ public class ServerTheardTests
     [Fact]
     public void HardStopShouldStopServerThread()
     {
+        IoC.Resolve<Hwdtech.ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.Root"));
 
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler", (object[] args) => new ActionCommand(() => { })).Execute();
 
@@ -63,50 +58,49 @@ public class ServerTheardTests
         //Assert.True(st.Stop());
     }
 
-    // [Fact]
-    // public void ExceptionCommandShouldNotStopServerThread()
-    // {
-    //     var mre = new ManualResetEvent(false);
-        
-    //     var q = new BlockingCollection<_ICommand.ICommand>(10);
-        
-    //     var st = new ServerThread(q);
+    [Fact]
+    public void ExceptionCommandShouldNotStopServerThread()
+    {
 
-    //     var cmd = new Mock<_ICommand.ICommand>();
-    //     cmd.Setup(m => m.Execute()).Verifiable();
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.Root"));
 
-    //     var hs = IoC.Resolve<ICommand>("Server.Commands.HardStop", st, () => { mre.Set(); });
+        var mre = new ManualResetEvent(false);
+        var q = new BlockingCollection<_ICommand.ICommand>(10);
+        var st = new ServerThread(q);
 
-    //     var handleCommand = new Mock<_ICommand.ICommand>();
-    //     handleCommand.Setup(m => m.Execute()).Verifiable();
-    //     // IoC.Resolve<ICommand>("IoC.Register", "Exception.Handler", (object[] args)=> handleCommand.Object).Execute();
+        var command = new Mock<_ICommand.ICommand>();
+        command.Setup(m => m.Execute()).Verifiable();
 
-    //     var cmdE = new Mock<_ICommand.ICommand>();
-    //     cmdE.Setup(m => m.Execute()).Throws<Exception>().Verifiable();
+        var hs = IoC.Resolve<_ICommand.ICommand>("Server.Commands.HardStop", st, () => { mre.Set(); });
 
-    //     q.Add(
-    //         IoC.Resolve<_ICommand.ICommand>("Scopes.Current.Set",
-    //             IoC.Resolve<object>("Scopes.New",
-    //                 IoC.Resolve<object>("Scopes.Root")
-    //             )
-    //         )
-    //     );
-    //     q.Add(IoC.Resolve<_ICommand.ICommand>("IoC.Register", "ExceptionHandler", (object[] args) => handleCommand.Object));
-    //     q.Add(cmd.Object);
-    //     q.Add(cmdE.Object);
-    //     q.Add(cmd.Object);
-    //     //q.Add(hs);
-    //     q.Add(cmd.Object);
+        var handleCommand = new Mock<_ICommand.ICommand>();
+        handleCommand.Setup(m => m.Execute()).Verifiable();
 
-    //     st.Execute();
-        
-    //     mre.WaitOne();
+        var cmdE = new Mock<_ICommand.ICommand>();
+        cmdE.Setup(m => m.Execute()).Throws<Exception>().Verifiable();
 
-    //     Assert.Single(q);
-        
-    //     cmd.Verify(m => m.Execute(), Times.Exactly(2));
-    //     handleCommand.Verify(m => m.Execute(), Times.Once());
+        q.Add(IoC.Resolve<_ICommand.ICommand>("Scopes.Current.Set",
+                IoC.Resolve<object>("Scopes.New",
+                    IoC.Resolve<object>("Scopes.Root")
+                )
+            )
+        );
+        q.Add(IoC.Resolve<_ICommand.ICommand>("IoC.Register", "ExceptionHandler", (object[] args) => handleCommand.Object));
+        q.Add(command.Object);
+        q.Add(cmdE.Object);
+        q.Add(command.Object);
+        q.Add(hs);
+        q.Add(command.Object);
 
-    // }
+        st.Execute();
+
+        mre.WaitOne(1000);
+
+        Assert.Single(q);
+
+        command.Verify(m => m.Execute(), Times.Exactly(2));
+        handleCommand.Verify(m => m.Execute(), Times.Once());
+
+    }
 }
 
