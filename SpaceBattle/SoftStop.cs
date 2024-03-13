@@ -18,14 +18,21 @@ public class SoftStop : _ICommand.ICommand
     {
         thread.UpdateBehavior(() =>
         {
-            if (queue.Count != 0)
+            if (queue.Count > 0)
             {
-                thread.Execute();
+                var cmd = queue.Take();
+                try
+                {
+                    cmd.Execute();
+                }
+                catch (Exception e)
+                {
+                    IoC.Resolve<ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
+                }
             }
             else
             {
-                var id = IoC.Resolve<int>("Get id", thread);
-                IoC.Resolve<_ICommand.ICommand>("ServerTheard.Command.Send", id, IoC.Resolve<_ICommand.ICommand>("ServerTheard.HardStop", id, action)).Execute();
+                IoC.Resolve<ICommand>("Server.Commands.HardStop", thread, action).Execute();
             }
         });
     }

@@ -10,39 +10,38 @@ public class ServerThread
     private bool _stop = false;
     private Action _behavior;
 
-    public ServerThread()
+    public ServerThread(BlockingCollection<_ICommand.ICommand> queue)
     {
-        _queue = new BlockingCollection<_ICommand.ICommand>();
+        _queue = queue;
         _behavior = () =>
-        {
-            var cmd = _queue.Take();
-            try
-            {
-                cmd.Execute();
-            }
-            catch (Exception e)
-            {
-                IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e);
-            }
-        };
-        _thread = new Thread(() =>
         {
             while (!_stop)
             {
-                _behavior();
+                var cmd = _queue.Take();
+                try
+                {
+                    cmd.Execute();
+                }
+                catch (Exception e)
+                {
+                    IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
+                }
             }
-        });
+        };
+        _thread = new Thread(() =>_behavior());
+        
     }
 
     public void Execute()
     {
         _thread.Start();
     }
+
     internal void Stop()
     {
         _stop = true;
     }
-    internal void UpdateBehavior(Action newBehavior)
+    public void UpdateBehavior(Action newBehavior)
     {
         _behavior = newBehavior;
     }
