@@ -24,7 +24,7 @@ public class ServerTheardTests
                         idDict.Add((int)args[0], (ServerThread)args[1]);
                         var st = (ServerThread)args[1];
                         st.Execute();
-                        if (args.Length == 3 && args[2]!=null)
+                        if (args.Length == 3 && args[2] != null)
                         {
                             new ActionCommand((Action)args[2]).Execute();
                         }
@@ -131,7 +131,7 @@ public class ServerTheardTests
 
         IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 2, q).Execute();
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 2, st).Execute();
-        
+
         var mre = new ManualResetEvent(false);
 
         var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { mre.Set(); }, q);
@@ -152,7 +152,7 @@ public class ServerTheardTests
     // public void HardStopCanNotStopServerBecauseOfException()
     // {
     //     IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-        
+
     //     var cmd = new Mock<_ICommand.ICommand>();
     //     IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
 
@@ -198,7 +198,7 @@ public class ServerTheardTests
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
         var mre = new ManualResetEvent(false);
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 4, () => { mre.Set();}, q);
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 4, () => { mre.Set(); }, q);
         var ss2 = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 4, () => { }, q);
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", 4, command.Object).Execute();

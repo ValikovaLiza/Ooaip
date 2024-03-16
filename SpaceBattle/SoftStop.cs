@@ -26,14 +26,15 @@ public class SoftStop : _ICommand.ICommand
                     {
                         queue.Take().Execute();
                     }
-                    catch(Exception e){
+                    catch (Exception e)
+                    {
                         IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", queue.Take(), e).Execute();
                     }
                 }
                 else
                 {
-                        action();
-                        thread.Stop();
+                    action();
+                    thread.Stop();
                 }
             });
         }

@@ -15,15 +15,15 @@ public class ServerThread
         _queue = queue;
         _behavior = () =>
         {
-                var cmd = _queue.Take();
-                try
-                {
-                    cmd.Execute();
-                }
-                catch (Exception e)
-                {
-                    IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
-                }
+            var cmd = _queue.Take();
+            try
+            {
+                cmd.Execute();
+            }
+            catch (Exception e)
+            {
+                IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
+            }
         };
         _thread = new Thread(() =>
         {
