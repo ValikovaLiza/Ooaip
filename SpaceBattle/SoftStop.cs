@@ -16,25 +16,30 @@ public class SoftStop : _ICommand.ICommand
     }
     public void Execute()
     {
-        thread.UpdateBehavior(() =>
+        if (thread.Equals(Thread.CurrentThread))
         {
-            if (queue.Count > 0)
+            thread.UpdateBehavior(() =>
             {
-                var cmd = queue.Take();
-                try
+                if (queue.TryTake(out var command) == true)
                 {
-                    cmd.Execute();
+                    try
+                    {
+                        queue.Take().Execute();
+                    }
+                    catch(Exception e){
+                        IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", queue.Take(), e).Execute();
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    IoC.Resolve<ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
+                        action();
+                        thread.Stop();
                 }
-            }
-            else
-            {
-                IoC.Resolve<ICommand>("Server.Commands.HardStop", thread, action).Execute();
-            }
-        });
+            });
+        }
+        else
+        {
+            throw new Exception("Wrong Thread");
+        }
     }
 }
-

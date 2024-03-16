@@ -15,8 +15,6 @@ public class ServerThread
         _queue = queue;
         _behavior = () =>
         {
-            while (!_stop)
-            {
                 var cmd = _queue.Take();
                 try
                 {
@@ -26,9 +24,14 @@ public class ServerThread
                 {
                     IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
                 }
-            }
         };
-        _thread = new Thread(() => _behavior());
+        _thread = new Thread(() =>
+        {
+            while (!_stop)
+            {
+                _behavior();
+            }
+        });
 
     }
 
@@ -36,7 +39,6 @@ public class ServerThread
     {
         _thread.Start();
     }
-
     internal void Stop()
     {
         _stop = true;
@@ -45,9 +47,9 @@ public class ServerThread
     {
         _behavior = newBehavior;
     }
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        
+
         if (obj == null)
         {
             return false;
@@ -64,5 +66,9 @@ public class ServerThread
         }
 
         throw new NotImplementedException();
+    }
+    public override int GetHashCode()
+    {
+        return _thread.GetHashCode();
     }
 }
