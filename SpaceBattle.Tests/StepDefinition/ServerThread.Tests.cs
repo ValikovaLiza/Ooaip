@@ -130,10 +130,11 @@ public class ServerTheardTests
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
-        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
-
+        var cmd = new Mock<_ICommand.ICommand>();
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+
+        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
 
         IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 2, q).Execute();
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 2, st).Execute();
@@ -141,56 +142,23 @@ public class ServerTheardTests
         var mre = new ManualResetEvent(false);
 
         var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { mre.Set(); }, q);
+        var ss2 = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { }, q);
 
         var command = new Mock<_ICommand.ICommand>();
         command.Setup(m => m.Execute()).Verifiable();
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, command.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, command.Object).Execute();
-
-        mre.WaitOne(1000);
-
-        Assert.Empty(q);
-    }
-
-    [Fact]
-    public void SoftStopStopServerAndCommandWithException()
-    {
-        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-
-        var cmd = new Mock<_ICommand.ICommand>();
-        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
-
-        var q = new BlockingCollection<_ICommand.ICommand>(10);
-        var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
-
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 2, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 2, st).Execute();
-
         var ecommand = new Mock<_ICommand.ICommand>();
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
-        var mre = new ManualResetEvent(false);
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { mre.Set(); }, q);
-
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, command.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, command.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
+        Assert.Throws<Exception>(() => ss.Execute());
         Assert.Empty(q);
-    }
-
-    [Fact]
-    public void HashCodeTheSame()
-    {
-        var queue1 = new BlockingCollection<_ICommand.ICommand>();
-        var serverThread1 = new ServerThread(queue1, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
-        var queue2 = new BlockingCollection<_ICommand.ICommand>();
-        var serverThread2 = new ServerThread(queue2, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
-        Assert.True(serverThread1.GetHashCode() != serverThread2.GetHashCode());
     }
 
     [Fact]
@@ -201,14 +169,14 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 1, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 1, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 4, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 4, st).Execute();
 
         var mre = new ManualResetEvent(false);
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 1, () => { mre.Set(); });
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 4, () => { mre.Set(); });
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 1, hs).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, hs).Execute();
 
         mre.WaitOne(1000);
 
@@ -224,14 +192,14 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 3, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 3, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 5, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 5, st).Execute();
 
         var mre = new ManualResetEvent(false);
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 3, () => { mre.Set(); }, q);
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 5, () => { mre.Set(); }, q);
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 5, ss).Execute();
 
         mre.WaitOne(1000);
 
@@ -240,11 +208,21 @@ public class ServerTheardTests
     }
 
     [Fact]
+    public void HashCodeTheSame()
+    {
+        var queue1 = new BlockingCollection<_ICommand.ICommand>();
+        var serverThread1 = new ServerThread(queue1, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+        var queue2 = new BlockingCollection<_ICommand.ICommand>();
+        var serverThread2 = new ServerThread(queue2, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+        Assert.True(serverThread1.GetHashCode() != serverThread2.GetHashCode());
+    }
+
+    [Fact]
     public void NegativeEqualThreads()
     {
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
-        Assert.False(st.Equals(Thread.CurrentThread));
+        Assert.False(st.Equals(null));
     }
 
     [Fact]
@@ -256,5 +234,16 @@ public class ServerTheardTests
         var st2 = new ServerThread(q1, Thread.CurrentThread);
 
         Assert.False(st1.Equals(st2));
+    }
+
+    [Fact]
+    public void PositiveCurrentEqualThreads()
+    {
+        var q = new BlockingCollection<_ICommand.ICommand>(10);
+
+        var st1 = new ServerThread(q, Thread.CurrentThread);
+        var nothing = 22;
+
+        Assert.False(st1.Equals(nothing));
     }
 }

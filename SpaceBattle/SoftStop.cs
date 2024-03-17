@@ -36,6 +36,7 @@ public class SoftStop : _ICommand.ICommand
                 {
                     thread.Stop();
                     action();
+
                 }
             });
         }
