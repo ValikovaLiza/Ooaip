@@ -22,19 +22,20 @@ public class SoftStop : _ICommand.ICommand
             {
                 if (queue.TryTake(out var command) == true)
                 {
+                    var cmd = queue.Take();
                     try
                     {
-                        queue.Take().Execute();
+                        cmd.Execute();
                     }
                     catch (Exception e)
                     {
-                        IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", queue.Take(), e).Execute();
+                        IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
                     }
                 }
                 else
                 {
-                    action();
                     thread.Stop();
+                    action();
                 }
             });
         }
