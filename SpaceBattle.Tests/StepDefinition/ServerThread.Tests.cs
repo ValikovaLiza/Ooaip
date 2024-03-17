@@ -165,18 +165,18 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 4, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 4, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 2, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 2, st).Execute();
 
         var ecommand = new Mock<_ICommand.ICommand>();
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
         var mre = new ManualResetEvent(false);
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 4, () => { mre.Set(); }, q);
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { mre.Set(); }, q);
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ecommand.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
@@ -186,8 +186,6 @@ public class ServerTheardTests
     [Fact]
     public void HashCodeTheSame()
     {
-        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-
         var queue1 = new BlockingCollection<_ICommand.ICommand>();
         var serverThread1 = new ServerThread(queue1, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var queue2 = new BlockingCollection<_ICommand.ICommand>();
@@ -203,15 +201,14 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 5, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 5, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 1, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 1, st).Execute();
 
         var mre = new ManualResetEvent(false);
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 5, () => { mre.Set(); });
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 1, () => { mre.Set(); });
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 5, hs).Execute();
-        
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 1, hs).Execute();
 
         mre.WaitOne(1000);
 
@@ -227,14 +224,14 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 6, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 6, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 3, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 3, st).Execute();
 
         var mre = new ManualResetEvent(false);
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 6, () => { mre.Set(); },q);
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 3, () => { mre.Set(); }, q);
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 6, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, ss).Execute();
 
         mre.WaitOne(1000);
 
@@ -257,7 +254,7 @@ public class ServerTheardTests
 
         var st1 = new ServerThread(q1, Thread.CurrentThread);
         var st2 = new ServerThread(q1, Thread.CurrentThread);
-        
+
         Assert.False(st1.Equals(st2));
     }
 }
