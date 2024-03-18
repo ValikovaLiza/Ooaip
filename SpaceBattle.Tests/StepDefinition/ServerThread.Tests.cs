@@ -142,7 +142,6 @@ public class ServerTheardTests
         var mre = new ManualResetEvent(false);
 
         var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { mre.Set(); }, q);
-        var ss2 = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { }, q);
 
         var command = new Mock<_ICommand.ICommand>();
         command.Setup(m => m.Execute()).Verifiable();
