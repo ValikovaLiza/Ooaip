@@ -174,7 +174,7 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 3, q).Execute();
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 3, st).Execute();
 
-        var ecommand = new Mock<_ICommand.ICommand>();
+        var ecommand = new Mock<_ICommand.ICommand>(); 
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
         var mre = new ManualResetEvent(false);
