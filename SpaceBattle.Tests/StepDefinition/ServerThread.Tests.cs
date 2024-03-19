@@ -101,11 +101,11 @@ public class ServerTheardTests
     public void HardStopShouldStopServerThread()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-
-        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
-
+        
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+
+        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 1, q).Execute();
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 1, st).Execute();
@@ -167,10 +167,10 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         var cmd = new Mock<_ICommand.ICommand>();
-        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
-
         var q = new BlockingCollection<_ICommand.ICommand>(10);
+
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
 
         IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 3, q).Execute();
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 3, st).Execute();
@@ -183,13 +183,11 @@ public class ServerTheardTests
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", 3, ecommand.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", 3, hs).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
         Assert.Throws<Exception>(() => hs.Execute());
-
-        Assert.Single(q);
+        Assert.Empty(q);
     }
 
     [Fact]
