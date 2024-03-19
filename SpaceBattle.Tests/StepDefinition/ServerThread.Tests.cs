@@ -101,7 +101,7 @@ public class ServerTheardTests
     public void HardStopShouldStopServerThread()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-        
+
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
