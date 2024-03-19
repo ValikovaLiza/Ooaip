@@ -123,11 +123,10 @@ public class ServerTheardTests
         mre.WaitOne(1000);
 
         Assert.Single(q);
-        command.Verify(m => m.Execute(), Times.Once);
     }
 
     [Fact]
-    public void SoftStopShouldStopServerThreadAndHaveCommandWithException()
+    public void HardStopShouldStopServerThreadWithCommandWithException()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
@@ -141,52 +140,80 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 2, st).Execute();
 
         var mre = new ManualResetEvent(false);
-
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 2, () => { mre.Set(); }, q);
-
-        var command = new Mock<_ICommand.ICommand>();
-        command.Setup(m => m.Execute()).Verifiable();
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 2, () => { mre.Set(); });
 
         var ecommand = new Mock<_ICommand.ICommand>();
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, command.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 2, hs).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", 2, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
-        Assert.Throws<Exception>(() => ss.Execute());
+        Assert.Throws<Exception>(() => hs.Execute());
+        Assert.Single(q);
+    }
+
+    [Fact]
+    public void SoftStopShouldStopServerThread()
+    {
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
+
+        var q = new BlockingCollection<_ICommand.ICommand>(10);
+        var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+
+        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
+
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 3, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 3, st).Execute();
+
+        var mre = new ManualResetEvent(false);
+
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 3, () => { mre.Set(); }, q);
+
+        var command = new Mock<_ICommand.ICommand>();
+        command.Setup(m => m.Execute()).Verifiable();
+
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, command.Object).Execute();
+
+        mre.WaitOne(1000);
+
         Assert.Empty(q);
     }
 
     [Fact]
-    public void HardStopShouldStopServerThreadAndCommandWithException()
+    public void SoftStopShouldStopServerThreadWithCommandWithException()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         var cmd = new Mock<_ICommand.ICommand>();
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 3, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 3, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 4, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 4, st).Execute();
+
+        var mre = new ManualResetEvent(false);
+
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", 4, () => { mre.Set(); }, q);
 
         var ecommand = new Mock<_ICommand.ICommand>();
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
-        var mre = new ManualResetEvent(false);
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 3, () => { mre.Set(); });
-
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, ecommand.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 3, hs).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
-        Assert.Throws<Exception>(() => hs.Execute());
+        Assert.Throws<Exception>(() => ss.Execute());
         Assert.Empty(q);
     }
 
@@ -198,14 +225,14 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
 
-        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 4, q).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 4, st).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Add Command To QueueDict", 5, q).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", 5, st).Execute();
 
         var mre = new ManualResetEvent(false);
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 4, () => { mre.Set(); });
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", 5, () => { mre.Set(); });
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", 4, hs).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", 5, hs).Execute();
 
         mre.WaitOne(1000);
 
