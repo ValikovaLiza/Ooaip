@@ -279,6 +279,3 @@ csharp_preserve_single_line_statements = true
 
 # IDE0058: Expression value is never used
 csharp_style_unused_value_expression_statement_preference = unused_local_variable
-
-# CS8625: Cannot convert null literal to non-nullable reference type.
-dotnet_diagnostic.CS8625.severity = none
