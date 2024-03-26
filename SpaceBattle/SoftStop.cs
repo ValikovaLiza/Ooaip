@@ -5,17 +5,16 @@ namespace SpaceBattle;
 public class SoftStop : _ICommand.ICommand
 {
     public ServerThread thread;
-    private readonly BlockingCollection<_ICommand.ICommand> queue;
     public Action action = () => { };
 
-    public SoftStop(ServerThread thread, Action action, BlockingCollection<_ICommand.ICommand> queue)
+    public SoftStop(ServerThread thread, Action action)
     {
         this.thread = thread;
         this.action = action;
-        this.queue = queue;
     }
     public void Execute()
     {
+        var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
         if (thread.Equals(Thread.CurrentThread))
         {
             thread.UpdateBehavior(() =>
@@ -35,8 +34,6 @@ public class SoftStop : _ICommand.ICommand
                 else
                 {
                     thread.Stop();
-                    action();
-
                 }
             });
         }
