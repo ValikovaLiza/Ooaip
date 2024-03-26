@@ -85,7 +85,17 @@ public class ServerTheardTests
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
-        var cmd = new Mock<_ICommand.ICommand>();
+        // var serverThreadMock = new Mock<ServerThread>(It.IsAny<BlockingCollection<ICommand>>(), It.IsAny<object>());
+        // serverThreadMock.Setup(st => st.Stop()).Callback(() =>
+        // {
+        //     serverThreadMock.Object.OnServerStopped();
+        // });
+
+        // var serverStopped = false;
+        // serverThreadMock.Object.ServerStopped += (sender, args) =>
+        // {
+        //     serverStopped = true;
+        // };
 
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
@@ -106,6 +116,7 @@ public class ServerTheardTests
 
         command.Verify(m => m.Execute(), Times.Once);
         Assert.Single(queue);
+        //Assert.True(serverStopped);
     }
 
     [Fact]

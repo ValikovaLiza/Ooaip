@@ -10,6 +10,7 @@ public class ServerThread
     private bool _stop = false;
     private Action _behavior;
     private readonly object _scope;
+    //public event EventHandler ServerStopped;
 
     public ServerThread(BlockingCollection<_ICommand.ICommand> queue, object scope)
     {
@@ -35,6 +36,8 @@ public class ServerThread
             {
                 _behavior();
             }
+            
+            //OnServerStopped();
         });
 
     }
@@ -51,6 +54,10 @@ public class ServerThread
     {
         _behavior = newBehavior;
     }
+    // protected virtual void OnServerStopped()
+    // {
+    //     ServerStopped?.Invoke(this, EventArgs.Empty);
+    // }
     public override bool Equals(object? obj)
     {
         if (obj == null)
