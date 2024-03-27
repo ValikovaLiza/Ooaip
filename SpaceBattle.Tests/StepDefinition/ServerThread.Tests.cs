@@ -88,7 +88,6 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread").Execute();
-
         var command = new Mock<_ICommand.ICommand>();
         command.Setup(m => m.Execute()).Verifiable();
 
