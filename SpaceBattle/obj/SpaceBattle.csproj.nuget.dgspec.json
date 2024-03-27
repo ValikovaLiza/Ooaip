@@ -37,6 +37,28 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Hwdtech.Core": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Hwdtech.IoC": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Hwdtech.Ioc.ScopeBasedIoCImplementation": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Hwdtech.Ioc.SingleThreadScope": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.18.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
