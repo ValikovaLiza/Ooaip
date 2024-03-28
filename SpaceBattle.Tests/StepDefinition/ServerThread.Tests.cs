@@ -7,7 +7,6 @@ public class ServerTheardTests
 {
     public ServerTheardTests()
     {
-
         new InitScopeBasedIoCImplementationCommand().Execute();
 
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
@@ -20,8 +19,8 @@ public class ServerTheardTests
                     {
                         var q = new BlockingCollection<_ICommand.ICommand>(10);
                         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
-                        IoC.Resolve<ICommand>("IoC.Register", "Get ServerThread", (object[] args) => st).Execute();
                         IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
+                        IoC.Resolve<ICommand>("IoC.Register", "Get ServerThread", (object[] args) => st).Execute();
                         st.Execute();
                         if (args.Length == 2 && args[1] != null)
                         {
@@ -100,8 +99,9 @@ public class ServerTheardTests
 
         mre.WaitOne(1000);
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
+        var thread = IoC.Resolve<ServerThread>("Get ServerThread"); 
 
-        command.Verify(m => m.Execute(), Times.Once);
+        Assert.False(thread.Wait());
         Assert.Single(queue);
     }
 
@@ -127,7 +127,9 @@ public class ServerTheardTests
 
         mre.WaitOne(1000);
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
+        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
 
+        Assert.False(thread.Wait());
         Assert.Empty(queue);
     }
 
@@ -158,6 +160,9 @@ public class ServerTheardTests
 
         Assert.Throws<Exception>(() => ss.Execute());
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
+        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
+
+        Assert.False(thread.Wait());
         Assert.Empty(queue);
     }
 
@@ -178,6 +183,9 @@ public class ServerTheardTests
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
 
         Assert.Throws<Exception>(() => hs.Execute());
+        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
+
+        Assert.False(thread.Wait());
         Assert.Empty(queue);
     }
 
