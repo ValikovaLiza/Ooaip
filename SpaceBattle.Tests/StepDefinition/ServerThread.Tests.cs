@@ -99,7 +99,7 @@ public class ServerTheardTests
 
         mre.WaitOne(1000);
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
-        var thread = IoC.Resolve<ServerThread>("Get ServerThread"); 
+        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
 
         Assert.False(thread.Wait());
         Assert.Single(queue);
