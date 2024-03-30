@@ -36,7 +36,6 @@ public class ServerThread
                 _behavior();
             }
         });
-
     }
     public void Execute()
     {
