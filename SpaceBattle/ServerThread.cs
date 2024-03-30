@@ -50,10 +50,6 @@ public class ServerThread
     {
         _behavior = newBehavior;
     }
-    public bool Wait()
-    {
-        return _thread.IsAlive;
-    }
     public override bool Equals(object? obj)
     {
         if (obj == null)

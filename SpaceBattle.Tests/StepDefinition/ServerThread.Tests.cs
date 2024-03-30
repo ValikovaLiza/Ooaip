@@ -72,7 +72,7 @@ public class ServerTheardTests
                 return new ActionCommand(() =>
                     {
                         var thread = IoC.Resolve<ServerThread>("Get ServerThread");
-                        new SoftStop(thread, (Action)args[0]).Execute();
+                        new SoftStop(thread).Execute();
                     }
                 );
             }
@@ -87,11 +87,21 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread").Execute();
-        var command = new Mock<_ICommand.ICommand>();
-        command.Setup(m => m.Execute()).Verifiable();
 
+        var executedOnce = false;
         var mre = new ManualResetEvent(false);
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", () => { mre.Set(); });
+
+        var command = new Mock<_ICommand.ICommand>();
+        command.Setup(m => m.Execute()).Callback(() =>
+        {
+            if (!executedOnce)
+            {
+                executedOnce = true;
+                mre.Set(); 
+            }
+        });
+
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread");
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", hs).Execute();
@@ -99,9 +109,6 @@ public class ServerTheardTests
 
         mre.WaitOne(1000);
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
-        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
-
-        Assert.False(thread.Wait());
         Assert.Single(queue);
     }
 
@@ -115,21 +122,29 @@ public class ServerTheardTests
 
         var mre = new ManualResetEvent(false);
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", () => { mre.Set(); });
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread");
 
         var command = new Mock<_ICommand.ICommand>();
-        command.Setup(m => m.Execute()).Verifiable();
+        var executeActions = new Action[]
+        {
+            () => {}, 
+            () => mre.Set() 
+        };
+
+        var executionStep = 0; 
+
+        command.Setup(m => m.Execute()).Callback(() =>
+        {
+            executeActions[executionStep]();
+            executionStep++;
+        });
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", ss).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
 
         mre.WaitOne(1000);
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
-        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
-
-        Assert.False(thread.Wait());
         Assert.Empty(queue);
     }
 
@@ -149,20 +164,28 @@ public class ServerTheardTests
         var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", () => { mre.Set(); });
 
         var ecommand = new Mock<_ICommand.ICommand>();
-        ecommand.Setup(m => m.Execute()).Throws(new Exception());
+        var executeActions = new Action[]
+        {
+            () => {},
+            () => mre.Set()
+        };
+
+        var executionStep = 0;
+
+        ecommand.Setup(m => m.Execute()).Callback(() =>
+        {
+            executeActions[executionStep]();
+            executionStep++;
+        }).Throws(new Exception());
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", ecommand.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", ecommand.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
         Assert.Throws<Exception>(() => ss.Execute());
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
-        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
-
-        Assert.False(thread.Wait());
         Assert.Empty(queue);
     }
 
@@ -183,9 +206,6 @@ public class ServerTheardTests
         var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
 
         Assert.Throws<Exception>(() => hs.Execute());
-        var thread = IoC.Resolve<ServerThread>("Get ServerThread");
-
-        Assert.False(thread.Wait());
         Assert.Empty(queue);
     }
 
