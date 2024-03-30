@@ -33,8 +33,8 @@ public class ServerTheardTests
                 return new ActionCommand(() =>
                     {
                         var tab = IoC.Resolve<Hashtable>("Get HashTable");
-                        var st = (ServerThread)tab[(Guid)args[0]];
-                        st.Execute();
+                        var st = (ServerThread)tab[(Guid)args[0]]!;
+                        st?.Execute();
                         if (args.Length == 2 && args[1] != null)
                         {
                             new ActionCommand((Action)args[1]).Execute();
@@ -68,7 +68,7 @@ public class ServerTheardTests
                 return new ActionCommand(() =>
                     {
                         var tab = IoC.Resolve<Hashtable>("Get HashTable");
-                        var st = (ServerThread)tab[(Guid)args[0]];
+                        var st = (ServerThread)tab[(Guid)args[0]]!;
                         new HardStop(st).Execute();
                         if (args.Length == 3 && args[2] != null)
                         {
@@ -85,7 +85,7 @@ public class ServerTheardTests
                 return new ActionCommand(() =>
                     {
                         var tab = IoC.Resolve<Hashtable>("Get HashTable");
-                        var st = (ServerThread)tab[(Guid)args[0]];
+                        var st = (ServerThread)tab[(Guid)args[0]]!;
                         new SoftStop(st).Execute();
                     }
                 );
