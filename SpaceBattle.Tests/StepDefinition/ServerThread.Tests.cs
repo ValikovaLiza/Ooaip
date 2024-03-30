@@ -97,7 +97,7 @@ public class ServerTheardTests
             if (!executedOnce)
             {
                 executedOnce = true;
-                mre.Set(); 
+                mre.Set();
             }
         });
 
@@ -127,11 +127,11 @@ public class ServerTheardTests
         var command = new Mock<_ICommand.ICommand>();
         var executeActions = new Action[]
         {
-            () => {}, 
-            () => mre.Set() 
+            () => {},
+            () => mre.Set()
         };
 
-        var executionStep = 0; 
+        var executionStep = 0;
 
         command.Setup(m => m.Execute()).Callback(() =>
         {
