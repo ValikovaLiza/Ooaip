@@ -111,8 +111,8 @@ public class ServerTheardTests
         command.Setup(m => m.Execute());
         var threadStoped = false;
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => 
-        { 
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () =>
+        {
             mre.Set();
             threadStoped = true;
         });
@@ -226,11 +226,10 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, hs).Execute();
 
         mre.WaitOne(1000);
-        
+
         Assert.Empty(q);
         Assert.True(threadStoped);
         Assert.Throws<Exception>(() => hs.Execute());
-        
     }
 
     [Fact]
