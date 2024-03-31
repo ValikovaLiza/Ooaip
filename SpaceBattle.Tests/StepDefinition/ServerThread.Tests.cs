@@ -225,8 +225,8 @@ public class ServerTheardTests
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid2, hs).Execute();
 
-        Assert.Throws<Exception>(() => hs.Execute());
         Assert.True(threadStoped);
+        Assert.Throws<Exception>(() => hs.Execute());
     }
 
     [Fact]
