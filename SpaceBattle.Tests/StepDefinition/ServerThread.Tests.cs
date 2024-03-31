@@ -197,7 +197,6 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
 
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
-
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
