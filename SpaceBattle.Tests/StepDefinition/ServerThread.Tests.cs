@@ -163,7 +163,6 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
         var mre = new ManualResetEvent(false);
-
         var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { mre.Set(); });
 
         var ecommand = new Mock<_ICommand.ICommand>();
