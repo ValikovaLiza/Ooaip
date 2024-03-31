@@ -54,10 +54,6 @@ public class ServerTheardTests
                         var st = (ServerThread)tab[(Guid)args[0]]!;
                         var qu = st.GetQueue();
                         qu.Add((_ICommand.ICommand)args[1]);
-                        if (args.Length == 3 && args[2] != null)
-                        {
-                            new ActionCommand((Action)args[2]).Execute();
-                        }
                     }
                 );
             }
@@ -120,7 +116,7 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, command.Object).Execute();
 
         mre.WaitOne(1000);
-        Assert.Single(st.GetQueue());
+        Assert.Single(q);
     }
 
     [Fact]
@@ -148,7 +144,7 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, command.Object).Execute();
 
         mre.WaitOne(1000);
-        Assert.Empty(st.GetQueue());
+        Assert.Empty(q);
     }
 
     [Fact]
@@ -180,7 +176,7 @@ public class ServerTheardTests
 
         Assert.Throws<Exception>(() => ss.Execute());
 
-        Assert.Empty(st.GetQueue());
+        Assert.Empty(q);
     }
 
     [Fact]
@@ -202,7 +198,7 @@ public class ServerTheardTests
         mre.WaitOne(1000);
 
         Assert.Throws<Exception>(() => hs.Execute());
-        Assert.Empty(st.GetQueue());
+        Assert.Empty(q);
     }
 
     [Fact]
