@@ -50,12 +50,10 @@ public class ServerTheardTests
             {
                 return new ActionCommand(() =>
                     {
-                        var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
-                        qu.Add((_ICommand.ICommand)args[0]);
-                        if (args.Length == 2 && args[1] != null)
-                        {
-                            new ActionCommand((Action)args[1]).Execute();
-                        }
+                        var tab = IoC.Resolve<Hashtable>("Get HashTable");
+                        var st = (ServerThread)tab[(Guid)args[0]]!;
+                        var qu = st.GetQueue();
+                        qu.Add((_ICommand.ICommand)args[1]);
                     }
                 );
             }
@@ -101,7 +99,6 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
 
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
@@ -115,12 +112,12 @@ public class ServerTheardTests
 
         var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => { mre.Set(); });
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", hs).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, hs).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, command.Object).Execute();
 
         mre.WaitOne(1000);
-        Assert.Single(q);
+        Assert.Single(st.GetQueue());
     }
 
     [Fact]
@@ -131,7 +128,6 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
 
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
@@ -145,12 +141,12 @@ public class ServerTheardTests
         var command = new Mock<_ICommand.ICommand>();
         command.Setup(m => m.Execute());
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, command.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, command.Object).Execute();
 
         mre.WaitOne(1000);
-        Assert.Empty(q);
+        Assert.Empty(st.GetQueue());
     }
 
     [Fact]
@@ -163,7 +159,6 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
 
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
@@ -177,15 +172,15 @@ public class ServerTheardTests
         var ecommand = new Mock<_ICommand.ICommand>();
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", ecommand.Object).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ss).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
         Assert.Throws<Exception>(() => ss.Execute());
 
-        Assert.Empty(q);
+        Assert.Empty(st.GetQueue());
     }
 
     [Fact]
@@ -194,7 +189,6 @@ public class ServerTheardTests
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
 
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
@@ -205,12 +199,12 @@ public class ServerTheardTests
 
         var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => { });
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", hs).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, hs).Execute();
 
         mre.WaitOne(1000);
 
         Assert.Throws<Exception>(() => hs.Execute());
-        Assert.Empty(q);
+        Assert.Empty(st.GetQueue());
     }
 
     [Fact]
