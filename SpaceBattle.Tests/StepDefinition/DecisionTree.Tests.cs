@@ -16,6 +16,7 @@ public class DecisionTreesTests
     [Fact]
     public void PositiveBuildingDecisionTreesTest()
     {
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
         var path = "../../../trees.txt";
         var getDecisionTreesStrategy = new Mock<IStrategy>();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "SpaceBattle.GetDecisionTrees", (object[] args) => getDecisionTreesStrategy.Object.Strategy(args)).Execute();
@@ -31,6 +32,7 @@ public class DecisionTreesTests
     [Fact]
     public void NegativeBuildingDecisionTreesTestThrowsException()
     {
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
         var path = "";
         var getDecisionTreesStrategy = new Mock<IStrategy>();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "SpaceBattle.GetDecisionTrees", (object[] args) => getDecisionTreesStrategy.Object.Strategy(args)).Execute();
@@ -46,6 +48,7 @@ public class DecisionTreesTests
     [Fact]
     public void NegativeBuildingDecisionTreesTestThrowsFileNotFoundException()
     {
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
         var path = "./DT_File.txt";
         var getDecisionTreesStrategy = new Mock<IStrategy>();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "SpaceBattle.GetDecisionTrees", (object[] args) => getDecisionTreesStrategy.Object.Strategy(args)).Execute();

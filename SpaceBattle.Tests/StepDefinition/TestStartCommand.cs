@@ -23,6 +23,7 @@ public class StartMoveCommandTests
     public StartMoveCommandTests()
     {
         new InitScopeBasedIoCImplementationCommand().Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
 
         _moveCommandStartableMock = new Mock<IMoveCommandStartable>();
         _uObjectMock = new Mock<IUObject>();
@@ -36,6 +37,7 @@ public class StartMoveCommandTests
     [Fact]
     public void Execute_RegistersTargetsAndPushesMovingCommand_WhenCalled()
     {
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
         var movingCommandMock = new Mock<ICommand>();
         var commandMock = new Mock<ICommand>();
         var queueMock = new Mock<IQueue>();
