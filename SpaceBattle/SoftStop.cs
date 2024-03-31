@@ -5,10 +5,12 @@ namespace SpaceBattle;
 public class SoftStop : _ICommand.ICommand
 {
     public ServerThread thread;
+    public Action action = () => { };
 
-    public SoftStop(ServerThread thread)
+    public SoftStop(ServerThread thread, Action action)
     {
         this.thread = thread;
+        this.action = action;
     }
     public void Execute()
     {
@@ -28,8 +30,9 @@ public class SoftStop : _ICommand.ICommand
                         IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", cmd, e).Execute();
                     }
                 }
-
+                
                 thread.Stop();
+                action();
             });
         }
         else

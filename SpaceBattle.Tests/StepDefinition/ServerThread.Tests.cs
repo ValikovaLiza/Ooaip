@@ -70,9 +70,9 @@ public class ServerTheardTests
                         var tab = IoC.Resolve<Hashtable>("Get HashTable");
                         var st = (ServerThread)tab[(Guid)args[0]]!;
                         new HardStop(st).Execute();
-                        if (args.Length == 3 && args[2] != null)
+                        if (args.Length == 2 && args[1] != null)
                         {
-                            new ActionCommand((Action)args[2]).Execute();
+                            new ActionCommand((Action)args[1]).Execute();
                         }
                     }
                 );
@@ -86,7 +86,7 @@ public class ServerTheardTests
                     {
                         var tab = IoC.Resolve<Hashtable>("Get HashTable");
                         var st = (ServerThread)tab[(Guid)args[0]]!;
-                        new SoftStop(st).Execute();
+                        new SoftStop(st, (Action)args[1]).Execute();
                     }
                 );
             }
@@ -121,7 +121,7 @@ public class ServerTheardTests
             }
         });
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid);
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => { });
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", hs).Execute();
@@ -148,7 +148,7 @@ public class ServerTheardTests
 
         var mre = new ManualResetEvent(false);
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid);
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { });
 
         var command = new Mock<_ICommand.ICommand>();
         var executeActions = new Action[]
@@ -192,7 +192,7 @@ public class ServerTheardTests
 
         var mre = new ManualResetEvent(false);
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { mre.Set(); });
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { });
 
         var ecommand = new Mock<_ICommand.ICommand>();
         var executeActions = new Action[]
