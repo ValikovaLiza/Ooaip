@@ -196,10 +196,9 @@ public class ServerTheardTests
 
         mre.WaitOne(1000);
 
-        Assert.Throws<Exception>(() => ss.Execute());
-
         Assert.Empty(q);
         Assert.True(threadStoped);
+        Assert.Throws<Exception>(() => ss.Execute());
     }
 
     [Fact]
