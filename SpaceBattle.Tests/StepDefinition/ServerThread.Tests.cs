@@ -175,7 +175,7 @@ public class ServerTheardTests
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid,ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
