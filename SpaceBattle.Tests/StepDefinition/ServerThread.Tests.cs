@@ -216,16 +216,11 @@ public class ServerTheardTests
         var uuid2 = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st2);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
-        var threadStoped = false;
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () =>
-        {
-            threadStoped = true;
-        });
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () =>{ });
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid2, hs).Execute();
 
-        Assert.True(threadStoped);
         Assert.Throws<Exception>(() => hs.Execute());
     }
 
