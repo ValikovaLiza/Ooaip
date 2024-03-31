@@ -226,10 +226,11 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, hs).Execute();
 
         mre.WaitOne(1000);
-
-        Assert.Throws<Exception>(() => hs.Execute());
+        
         Assert.Empty(q);
         Assert.True(threadStoped);
+        Assert.Throws<Exception>(() => hs.Execute());
+        
     }
 
     [Fact]
