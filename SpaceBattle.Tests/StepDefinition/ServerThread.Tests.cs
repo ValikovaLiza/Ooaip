@@ -108,8 +108,8 @@ public class ServerTheardTests
         var mre = new ManualResetEvent(false);
 
         var command = new Mock<_ICommand.ICommand>();
-        command.Setup(m => m.Execute()).Callback(() =>{mre.Set();});
-        
+        command.Setup(m => m.Execute()).Callback(() => { mre.Set(); });
+
         var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () =>
         {
             mre.Set();
