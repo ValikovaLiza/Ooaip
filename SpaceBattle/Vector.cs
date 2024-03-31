@@ -2,11 +2,6 @@
 public class Vector
 {
     private readonly int[] _values;
-    public int this[int index]
-    {
-        get => _values[index];
-        set => _values[index] = value;
-    }
     public int Size => _values.Length;
 
     public Vector(params int[] values)
@@ -55,6 +50,6 @@ public class Vector
     }
     public override int GetHashCode()
     {
-        return 0;
+        return _values.GetHashCode();
     }
 }
