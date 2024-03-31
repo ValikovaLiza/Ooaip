@@ -49,10 +49,6 @@ public class ServerThread
     {
         _behavior = newBehavior;
     }
-    public BlockingCollection<_ICommand.ICommand> GetQueue()
-    {
-        return _queue;
-    }
     public override bool Equals(object? obj)
     {
         if (obj == null)

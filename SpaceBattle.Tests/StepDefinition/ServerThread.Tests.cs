@@ -50,9 +50,7 @@ public class ServerTheardTests
             {
                 return new ActionCommand(() =>
                     {
-                        var tab = IoC.Resolve<Hashtable>("Get HashTable");
-                        var st = (ServerThread)tab[(Guid)args[0]]!;
-                        var qu = st.GetQueue();
+                        var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
                         qu.Add((_ICommand.ICommand)args[1]);
                     }
                 );
@@ -94,13 +92,14 @@ public class ServerTheardTests
     [Fact]
     public void HardStopShouldStopServerThread()
     {
-        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"));
-        IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        var st = new ServerThread(q, scope);
+        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
+
+        var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
@@ -123,13 +122,14 @@ public class ServerTheardTests
     [Fact]
     public void SoftStopShouldStopServerThread()
     {
-        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"));
-        IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        var st = new ServerThread(q, scope);
+        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
+
+        var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
@@ -152,20 +152,22 @@ public class ServerTheardTests
     [Fact]
     public void SoftStopShouldStopServerThreadWithCommandWithException()
     {
-        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"));
-        IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         var cmd = new Mock<_ICommand.ICommand>();
 
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => cmd.Object).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        var st = new ServerThread(q, scope);
+        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
+
+        var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
         var mre = new ManualResetEvent(false);
+
         var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { mre.Set(); });
 
         var ecommand = new Mock<_ICommand.ICommand>();
@@ -173,7 +175,7 @@ public class ServerTheardTests
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ss).Execute();
-        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid,ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
@@ -185,16 +187,18 @@ public class ServerTheardTests
     [Fact]
     public void HardStopCanNotStopServerBecauseOfWrongThread()
     {
-        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"));
-        IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
 
         var q = new BlockingCollection<_ICommand.ICommand>(10);
-        var st = new ServerThread(q, scope);
+        IoC.Resolve<ICommand>("IoC.Register", "Get BlockingQueue", (object[] args) => q).Execute();
+
+        var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
         var mre = new ManualResetEvent(false);
+
         var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => { });
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, hs).Execute();

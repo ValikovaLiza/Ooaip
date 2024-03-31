@@ -1,4 +1,5 @@
-﻿using Hwdtech;
+﻿using System.Collections.Concurrent;
+using Hwdtech;
 
 namespace SpaceBattle;
 public class SoftStop : _ICommand.ICommand
@@ -13,7 +14,7 @@ public class SoftStop : _ICommand.ICommand
     }
     public void Execute()
     {
-        var queue = thread.GetQueue();
+        var queue = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
         if (thread.Equals(Thread.CurrentThread))
         {
             thread.UpdateBehavior(() =>
