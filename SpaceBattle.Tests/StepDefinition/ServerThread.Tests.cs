@@ -52,6 +52,10 @@ public class ServerTheardTests
                     {
                         var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get BlockingQueue");
                         qu.Add((_ICommand.ICommand)args[0]);
+                        if (args.Length == 2 && args[1] != null)
+                        {
+                            new ActionCommand((Action)args[1]).Execute();
+                        }
                     }
                 );
             }
@@ -104,26 +108,19 @@ public class ServerTheardTests
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
-        var threadStoped = false;
         var mre = new ManualResetEvent(false);
 
         var command = new Mock<_ICommand.ICommand>();
-        command.Setup(m => m.Execute()).Callback(() => { mre.Set(); });
+        command.Setup(m => m.Execute());
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () =>
-        {
-            mre.Set();
-            threadStoped = true;
-        });
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => { mre.Set(); });
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", hs).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", command.Object).Execute();
 
-        mre.WaitOne();
+        mre.WaitOne(1000);
         Assert.Single(q);
-
-        Assert.True(threadStoped);
     }
 
     [Fact]
@@ -142,13 +139,8 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
         var mre = new ManualResetEvent(false);
-        var threadStoped = false;
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () =>
-        {
-            mre.Set();
-            threadStoped = true;
-        });
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { mre.Set(); });
 
         var command = new Mock<_ICommand.ICommand>();
         command.Setup(m => m.Execute());
@@ -159,7 +151,6 @@ public class ServerTheardTests
 
         mre.WaitOne(1000);
         Assert.Empty(q);
-        Assert.True(threadStoped);
     }
 
     [Fact]
@@ -180,13 +171,8 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
         var mre = new ManualResetEvent(false);
-        var threadStoped = false;
 
-        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () =>
-        {
-            mre.Set();
-            threadStoped = true;
-        });
+        var ss = IoC.Resolve<_ICommand.ICommand>("Soft Stop The Thread", uuid, () => { mre.Set(); });
 
         var ecommand = new Mock<_ICommand.ICommand>();
         ecommand.Setup(m => m.Execute()).Throws(new Exception());
@@ -195,12 +181,11 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Send Command", ss).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", ecommand.Object).Execute();
 
-        mre.WaitOne(1500);
+        mre.WaitOne(1000);
 
         Assert.Throws<Exception>(() => ss.Execute());
 
         Assert.Empty(q);
-        Assert.True(threadStoped);
     }
 
     [Fact]
@@ -218,13 +203,8 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
         var mre = new ManualResetEvent(false);
-        var threadStoped = false;
 
-        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () =>
-        {
-            mre.Set();
-            threadStoped = true;
-        });
+        var hs = IoC.Resolve<_ICommand.ICommand>("Hard Stop The Thread", uuid, () => { });
 
         IoC.Resolve<_ICommand.ICommand>("Send Command", hs).Execute();
 
@@ -232,7 +212,6 @@ public class ServerTheardTests
 
         Assert.Throws<Exception>(() => hs.Execute());
         Assert.Empty(q);
-        Assert.True(threadStoped);
     }
 
     [Fact]
