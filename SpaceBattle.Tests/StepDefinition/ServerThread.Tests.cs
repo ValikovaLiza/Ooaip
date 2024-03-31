@@ -174,6 +174,8 @@ public class ServerTheardTests
 
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
+        var st2 = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+        var uuid2 = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st2);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
 
@@ -193,6 +195,7 @@ public class ServerTheardTests
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ss).Execute();
         IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, ecommand.Object).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid2, ecommand.Object).Execute();
 
         mre.WaitOne(1000);
 
@@ -209,6 +212,8 @@ public class ServerTheardTests
         var q = new BlockingCollection<_ICommand.ICommand>(10);
         var st = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
         var uuid = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st);
+        var st2 = new ServerThread(q, IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current")));
+        var uuid2 = IoC.Resolve<Guid>("Add Thread To HT And Get Uuid by it", st2);
 
         IoC.Resolve<_ICommand.ICommand>("Create and Start Thread", uuid).Execute();
         var threadStoped = false;
@@ -218,7 +223,7 @@ public class ServerTheardTests
             threadStoped = true;
         });
 
-        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid, hs).Execute();
+        IoC.Resolve<_ICommand.ICommand>("Send Command", uuid2, hs).Execute();
 
         Assert.Throws<Exception>(() => hs.Execute());
         Assert.True(threadStoped);
