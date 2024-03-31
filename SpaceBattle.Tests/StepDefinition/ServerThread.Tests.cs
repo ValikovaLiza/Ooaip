@@ -54,6 +54,10 @@ public class ServerTheardTests
                         var st = (ServerThread)tab[(Guid)args[0]]!;
                         var qu = st.GetQueue();
                         qu.Add((_ICommand.ICommand)args[1]);
+                        if (args.Length == 3 && args[2] != null)
+                        {
+                            new ActionCommand((Action)args[2]).Execute();
+                        }
                     }
                 );
             }
