@@ -1,0 +1,13 @@
+{
+    {
+        “type”: “fire”,
+        “game id”: “asdfg”,
+        “game item id”: 548
+    }
+    {
+        “type”: “start movement”,
+        “game id”: “asdfg”,
+        “game item id”: 548
+        “initial velocity”: 2
+    }
+}

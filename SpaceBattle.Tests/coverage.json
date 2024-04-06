@@ -177,27 +177,6 @@
         }
       }
     },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\ActionCommand.cs": {
-      "SpaceBattle.ActionCommand": {
-        "System.Void SpaceBattle.ActionCommand::Execute()": {
-          "Lines": {
-            "12": 24,
-            "13": 24,
-            "14": 22
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ActionCommand::.ctor(System.Action)": {
-          "Lines": {
-            "6": 22,
-            "7": 22,
-            "8": 22,
-            "9": 22
-          },
-          "Branches": []
-        }
-      }
-    },
     "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\BuildingDecisionTrees.cs": {
       "SpaceBattle.BuildingDecisionTrees": {
         "System.Void SpaceBattle.BuildingDecisionTrees::Execute()": {
@@ -298,49 +277,6 @@
         }
       }
     },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\HardStop.cs": {
-      "SpaceBattle.HardStop": {
-        "System.Void SpaceBattle.HardStop::Execute()": {
-          "Lines": {
-            "10": 3,
-            "11": 3,
-            "12": 2,
-            "13": 2,
-            "14": 2,
-            "16": 1,
-            "17": 1,
-            "19": 2
-          },
-          "Branches": [
-            {
-              "Line": 11,
-              "Offset": 19,
-              "EndOffset": 21,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 11,
-              "Offset": 19,
-              "EndOffset": 37,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            }
-          ]
-        },
-        "System.Void SpaceBattle.HardStop::.ctor(SpaceBattle.ServerThread)": {
-          "Lines": {
-            "5": 3,
-            "6": 3,
-            "7": 3,
-            "8": 3
-          },
-          "Branches": []
-        }
-      }
-    },
     "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\MacroCommands.cs": {
       "SpaceBattle.MacroCommand": {
         "System.Void SpaceBattle.MacroCommand::Execute()": {
@@ -419,249 +355,6 @@
         }
       }
     },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\ServerThread.cs": {
-      "SpaceBattle.ServerThread": {
-        "System.Void SpaceBattle.ServerThread::Execute()": {
-          "Lines": {
-            "46": 4,
-            "47": 4,
-            "48": 4
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ServerThread::Stop()": {
-          "Lines": {
-            "50": 4,
-            "51": 4,
-            "52": 4
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ServerThread::UpdateBehavior(System.Action)": {
-          "Lines": {
-            "54": 2,
-            "55": 2,
-            "56": 2
-          },
-          "Branches": []
-        },
-        "System.Boolean SpaceBattle.ServerThread::Equals(System.Object)": {
-          "Lines": {
-            "62": 9,
-            "63": 9,
-            "64": 1,
-            "65": 1,
-            "68": 8,
-            "69": 6,
-            "70": 6,
-            "73": 2,
-            "74": 1,
-            "75": 1,
-            "78": 1,
-            "79": 9
-          },
-          "Branches": [
-            {
-              "Line": 63,
-              "Offset": 7,
-              "EndOffset": 9,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 63,
-              "Offset": 7,
-              "EndOffset": 14,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 8
-            },
-            {
-              "Line": 68,
-              "Offset": 37,
-              "EndOffset": 39,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 6
-            },
-            {
-              "Line": 68,
-              "Offset": 37,
-              "EndOffset": 57,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 2
-            },
-            {
-              "Line": 73,
-              "Offset": 76,
-              "EndOffset": 78,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 1
-            },
-            {
-              "Line": 73,
-              "Offset": 76,
-              "EndOffset": 83,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 1
-            }
-          ]
-        },
-        "System.Int32 SpaceBattle.ServerThread::GetHashCode()": {
-          "Lines": {
-            "82": 2,
-            "83": 2,
-            "84": 2
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ServerThread::<.ctor>b__5_0()": {
-          "Lines": {
-            "20": 7,
-            "21": 7,
-            "23": 7,
-            "24": 7,
-            "25": 6,
-            "26": 1,
-            "27": 1,
-            "28": 1,
-            "29": 1,
-            "30": 17
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ServerThread::<.ctor>b__5_1()": {
-          "Lines": {
-            "32": 4,
-            "33": 4,
-            "35": 15,
-            "36": 11,
-            "37": 11,
-            "38": 11,
-            "41": 14
-          },
-          "Branches": [
-            {
-              "Line": 35,
-              "Offset": 59,
-              "EndOffset": 34,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 11
-            },
-            {
-              "Line": 35,
-              "Offset": 59,
-              "EndOffset": 61,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 4
-            }
-          ]
-        },
-        "System.Void SpaceBattle.ServerThread::.ctor(System.Collections.Concurrent.BlockingCollection`1<_ICommand.ICommand>,System.Object)": {
-          "Lines": {
-            "10": 10,
-            "15": 10,
-            "16": 10,
-            "17": 10,
-            "18": 10,
-            "19": 10,
-            "22": 10,
-            "31": 10,
-            "34": 10,
-            "39": 10,
-            "40": 10,
-            "43": 10
-          },
-          "Branches": []
-        }
-      }
-    },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SoftStop.cs": {
-      "SpaceBattle.SoftStop": {
-        "System.Void SpaceBattle.SoftStop::Execute()": {
-          "Lines": {
-            "16": 3,
-            "17": 3,
-            "18": 3,
-            "19": 2,
-            "20": 2,
-            "21": 4,
-            "22": 4,
-            "23": 2,
-            "24": 2,
-            "25": 2,
-            "26": 2,
-            "27": 2,
-            "28": 1,
-            "29": 1,
-            "30": 1,
-            "31": 1,
-            "32": 1,
-            "33": 2,
-            "34": 2,
-            "35": 2,
-            "36": 2,
-            "37": 2,
-            "38": 6,
-            "39": 2,
-            "41": 1,
-            "42": 1,
-            "44": 2
-          },
-          "Branches": [
-            {
-              "Line": 18,
-              "Offset": 53,
-              "EndOffset": 55,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 18,
-              "Offset": 53,
-              "EndOffset": 83,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            },
-            {
-              "Line": 22,
-              "Offset": 16,
-              "EndOffset": 18,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 22,
-              "Offset": 16,
-              "EndOffset": 80,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 2
-            }
-          ]
-        },
-        "System.Void SpaceBattle.SoftStop::.ctor(SpaceBattle.ServerThread,System.Action)": {
-          "Lines": {
-            "8": 3,
-            "10": 3,
-            "11": 3,
-            "12": 3,
-            "13": 3,
-            "14": 3
-          },
-          "Branches": []
-        }
-      }
-    },
     "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\StartMoveCommand.cs": {
       "SpaceBattle.StartMoveCommand": {
         "System.Void SpaceBattle.StartMoveCommand::Execute()": {
@@ -682,6 +375,162 @@
             "9": 1,
             "10": 1,
             "11": 1
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "Udp.dll": {
+    "C:\\Users\\liza5\\C#\\Ooaip\\Udp\\CommandData.cs": {
+      "Udp.CommandData": {
+        "System.String Udp.CommandData::get_CommandType()": {
+          "Lines": {
+            "5": 2
+          },
+          "Branches": []
+        },
+        "System.String Udp.CommandData::get_gameId()": {
+          "Lines": {
+            "6": 2
+          },
+          "Branches": []
+        },
+        "System.String Udp.CommandData::get_gameItemId()": {
+          "Lines": {
+            "7": 2
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> Udp.CommandData::get_initialVelocity()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> Udp.CommandData::get_angularVelocity()": {
+          "Lines": {
+            "9": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\Udp\\EndPoint.cs": {
+      "Udp.EndPoint": {
+        "System.Void Udp.EndPoint::GetMessage(System.Byte[])": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Void Udp.EndPoint::.ctor(System.Net.IPAddress,System.Int32)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\Udp\\UDPClient.cs": {
+      "Udp.UDPClient": {
+        "System.Void Udp.UDPClient::Initialize(System.Net.IPAddress,System.Int32)": {
+          "Lines": {
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "18": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1
+          },
+          "Branches": []
+        },
+        "System.Void Udp.UDPClient::StartMessageLoop()": {
+          "Lines": {
+            "25": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 0,
+            "33": 1,
+            "34": 1
+          },
+          "Branches": []
+        }
+      },
+      "Udp.UDPClient/<Send>d__6": {
+        "System.Void Udp.UDPClient/<Send>d__6::MoveNext()": {
+          "Lines": {
+            "37": 1,
+            "38": 1,
+            "39": 1,
+            "40": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\Udp\\UDPServer.cs": {
+      "Udp.UDPServer": {
+        "System.Void Udp.UDPServer::Initialize()": {
+          "Lines": {
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "24": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1,
+            "29": 1
+          },
+          "Branches": []
+        },
+        "System.Void Udp.UDPServer::StartMessageLoop()": {
+          "Lines": {
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "38": 1,
+            "39": 0,
+            "40": 1,
+            "41": 1
+          },
+          "Branches": []
+        },
+        "System.Void Udp.UDPServer::TableOfThreadsAndQueues()": {
+          "Lines": {
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "52": 1,
+            "54": 1,
+            "55": 1,
+            "56": 1
+          },
+          "Branches": []
+        }
+      },
+      "Udp.UDPServer/<SendTo>d__7": {
+        "System.Void Udp.UDPServer/<SendTo>d__7::MoveNext()": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0
           },
           "Branches": []
         }

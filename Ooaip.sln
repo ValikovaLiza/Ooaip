@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattle", "SpaceBattle\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattle.Tests", "SpaceBattle.Tests\SpaceBattle.Tests.csproj", "{7D37B5D9-860C-47F4-A9B0-9C54ABF1B5FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Udp", "Udp\Udp.csproj", "{7F43C3C6-67C9-491C-9697-A94D5BC9F61E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,13 @@ Global
 		{7D37B5D9-860C-47F4-A9B0-9C54ABF1B5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D37B5D9-860C-47F4-A9B0-9C54ABF1B5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D37B5D9-860C-47F4-A9B0-9C54ABF1B5FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E6265A7-6B40-448C-A459-0A4BC559AA98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E6265A7-6B40-448C-A459-0A4BC559AA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E6265A7-6B40-448C-A459-0A4BC559AA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E6265A7-6B40-448C-A459-0A4BC559AA98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F43C3C6-67C9-491C-9697-A94D5BC9F61E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F43C3C6-67C9-491C-9697-A94D5BC9F61E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F43C3C6-67C9-491C-9697-A94D5BC9F61E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F43C3C6-67C9-491C-9697-A94D5BC9F61E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
