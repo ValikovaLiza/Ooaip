@@ -1,40 +1,27 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using Hwdtech;
 
 public class UDPServer
 {
     private const int listenPort = 11000;
 
-    public void StartListener()
+    public static void StartListener(byte[] sendbuf, IPEndPoint ep)
     {
         var listener = new UdpClient(listenPort);
-        var groupEP = new IPEndPoint(IPAddress.Any, listenPort);
 
-        try
+        while (true)
         {
-            while (true)
-            {
-                Console.WriteLine("Waiting for broadcast");
-                var bytes = listener.Receive(ref groupEP);
+            listener.Send(sendbuf, sendbuf.Length, ep);
 
-                Console.WriteLine($"Received broadcast from {groupEP} :");
-                Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-            }
+            break;
         }
-        catch (SocketException e)
-        {
-            Console.WriteLine(e);
-        }
-        finally
-        {
-            listener.Close();
-        }
+
+        listener.Close();
     }
 
-    public void TableOfThreadsAndQueues()
+    public static void TableOfThreadsAndQueues()
     {
         var gameToThread = new Dictionary<string, string>();
         var threadToQueue = new Dictionary<string, BlockingCollection<_ICommand.ICommand>>();

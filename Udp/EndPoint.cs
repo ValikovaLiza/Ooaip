@@ -1,20 +1,12 @@
 ﻿using System.Collections.Concurrent;
-using System.Net;
 using System.Text;
 using Hwdtech;
 using Newtonsoft.Json;
 
 namespace Udp;
-public class EndPoint : IPEndPoint
+public class EndPoint
 {
-    private int port;
-    private readonly IPAddress address;
-    public EndPoint(IPAddress address, int port) : base(address, port)
-    {
-        this.address = address;
-        this.port = port;
-    }
-    public void GetMessage(byte[] sendbuf)
+    public static void GetMessage(byte[] sendbuf)
     {
         var message = JsonConvert.DeserializeObject<CommandData>(Encoding.ASCII.GetString(sendbuf, 0, sendbuf.Length));
 
