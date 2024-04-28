@@ -65,6 +65,7 @@ public class EndPointTests
         client.Send(sendbuf, sendbuf.Length, ep);
         var message2 = Encoding.ASCII.GetBytes("STOP");
         client.Send(message2, message2.Length, ep);
+        server.Stop();
 
         Udp.EndPoint.GetMessage(sendbuf);
         client.Close();

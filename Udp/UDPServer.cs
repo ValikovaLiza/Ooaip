@@ -8,6 +8,7 @@ public class UDPServer
 {
     private const int listenPort = 11000;
     private Thread? listenThread;
+    private bool running = true;
 
     private void StartListener()
     {
@@ -20,7 +21,7 @@ public class UDPServer
             try
             {
                 var bytes = new byte[1024];
-                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")))
+                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")) && running)
                 {
                     bytes = listener.Receive(ref groupEP);
                 }
@@ -33,8 +34,6 @@ public class UDPServer
             {
                 listener.Close();
             }
-
-            listenThread?.Interrupt();
         });
 
         listenThread.Start();
@@ -44,7 +43,10 @@ public class UDPServer
     {
         StartListener();
     }
-
+    public void Stop()
+    {
+        running = false;
+    }
     public static void TableOfThreadsAndQueues()
     {
         var gameToThread = new ConcurrentDictionary<string, string>();
