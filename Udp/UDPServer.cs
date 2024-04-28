@@ -40,6 +40,7 @@ public class UDPServer
     public void Stop()
     {
         running = false;
+        listenThread?.Join();
     }
 
     public void Main()
