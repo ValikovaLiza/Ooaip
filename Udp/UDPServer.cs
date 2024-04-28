@@ -25,7 +25,7 @@ public class UDPServer
                     bytes = listener.Receive(ref groupEP);
                 }
             }
-            catch (SocketException e)
+            catch (Exception e)
             {
                 IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", e).Execute();
             }
