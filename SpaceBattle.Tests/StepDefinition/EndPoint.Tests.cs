@@ -17,23 +17,23 @@ public class EndPointTests
 
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
 
-        var dictOfCommands = new Dictionary<string, _ICommand.ICommand>();
+        var dictOfCommands = new ConcurrentDictionary<string, _ICommand.ICommand>();
         var command = new ActionCommand(() => { });
-        dictOfCommands.Add("fire", command);
-        dictOfCommands.Add("start", command);
-        dictOfCommands.Add("stop", command);
-        dictOfCommands.Add("spin", command);
+        dictOfCommands.TryAdd("fire", command);
+        dictOfCommands.TryAdd("start", command);
+        dictOfCommands.TryAdd("stop", command);
+        dictOfCommands.TryAdd("spin", command);
         IoC.Resolve<ICommand>("IoC.Register", "Get CommandsDict", (object[] args) => dictOfCommands).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "Send Message",
         (object[] args) =>
         {
-            var dictthread = IoC.Resolve<Dictionary<string, string>>("Get GameToThreadDict");
+            var dictthread = IoC.Resolve<ConcurrentDictionary<string, string>>("Get GameToThreadDict");
             var threadId = dictthread[(string)args[0]];
-            var dictqu = IoC.Resolve<Dictionary<string, BlockingCollection<_ICommand.ICommand>>>("Get ThreadToQueueDict");
+            var dictqu = IoC.Resolve<ConcurrentDictionary<string, BlockingCollection<_ICommand.ICommand>>>("Get ThreadToQueueDict");
             var commanddd = (CommandData)args[1];
             var command = commanddd.CommandType;
-            dictqu[(string)threadId].Add(IoC.Resolve<Dictionary<string, _ICommand.ICommand>>("Get CommandsDict")[command!]);
+            dictqu[(string)threadId].Add(IoC.Resolve<ConcurrentDictionary<string, _ICommand.ICommand>>("Get CommandsDict")[command!]);
             return dictqu[(string)threadId];
         }).Execute();
 
@@ -43,13 +43,14 @@ public class EndPointTests
     public void MessageWasRecivedAndAddedToNessesaryQueue()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-        var so = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
+
+        var client = new UdpClient();
 
         UDPServer.TableOfThreadsAndQueues();
+        var server = new UDPServer();
 
-        UDPServer.Main();
-
-        var broadcast = IPAddress.Parse("192.168.1.33");
+        server.Main();
 
         var message = new CommandData
         {
@@ -60,9 +61,10 @@ public class EndPointTests
         var s = JsonConvert.SerializeObject(message, Formatting.Indented);
         var sendbuf = Encoding.ASCII.GetBytes(s);
 
-        var ep = new IPEndPoint(broadcast, 11000);
+        var ep = new IPEndPoint(IPAddress.Parse("192.168.1.33"), 11000);
 
-        so.SendTo(sendbuf, ep);
+        client.Send(sendbuf, sendbuf.Length, ep);
+        server.Stop();
 
         Udp.EndPoint.GetMessage(sendbuf);
 
