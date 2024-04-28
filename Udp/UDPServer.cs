@@ -42,6 +42,10 @@ public class UDPServer
     {
         StartListener();
     }
+    public void Stop()
+    {
+        listenThread?.Join();
+    }
 
     public static void TableOfThreadsAndQueues()
     {
