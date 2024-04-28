@@ -49,7 +49,6 @@ public class EndPointTests
 
         UDPServer.TableOfThreadsAndQueues();
         var server = new UDPServer();
-
         server.Main();
 
         var message = new CommandData
