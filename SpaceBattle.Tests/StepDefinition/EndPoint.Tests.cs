@@ -63,7 +63,8 @@ public class EndPointTests
         var ep = new IPEndPoint(IPAddress.Parse("192.168.1.33"), 11000);
 
         client.Send(sendbuf, sendbuf.Length, ep);
-        server.Stop();
+        var message2 = Encoding.ASCII.GetBytes("STOP");
+        client.Send(message2, message2.Length, ep);
 
         Udp.EndPoint.GetMessage(sendbuf);
 

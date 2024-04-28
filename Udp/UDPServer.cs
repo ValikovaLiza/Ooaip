@@ -1,13 +1,13 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using Hwdtech;
 
 public class UDPServer
 {
     private const int listenPort = 11000;
     private Thread? listenThread;
-    private bool running = true;
 
     private void StartListener()
     {
@@ -19,9 +19,10 @@ public class UDPServer
         {
             try
             {
-                while (running)
+                var bytes = new byte[1024];
+                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")))
                 {
-                    var bytes = listener.Receive(ref groupEP);
+                    bytes = listener.Receive(ref groupEP);
                 }
             }
             catch (SocketException e)
@@ -35,11 +36,6 @@ public class UDPServer
         });
 
         listenThread.Start();
-    }
-
-    public void Stop()
-    {
-        running = false;
     }
 
     public void Main()
