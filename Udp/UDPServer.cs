@@ -44,9 +44,6 @@ public class UDPServer
     {
         StartListener();
     }
-    public bool alive(){
-        return listenThread!.IsAlive;
-    }
 
     public static void TableOfThreadsAndQueues()
     {
