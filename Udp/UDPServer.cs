@@ -44,7 +44,7 @@ public class UDPServer
     }
     public void Stop()
     {
-        listenThread?.Join();
+        listenThread?.Join(1000);
     }
 
     public static void TableOfThreadsAndQueues()
