@@ -33,6 +33,8 @@ public class UDPServer
             {
                 listener.Close();
             }
+
+            listenThread?.Interrupt();
         });
 
         listenThread.Start();
@@ -42,9 +44,8 @@ public class UDPServer
     {
         StartListener();
     }
-    public void Stop()
-    {
-        listenThread?.Join(1000);
+    public bool alive(){
+        return listenThread!.IsAlive;
     }
 
     public static void TableOfThreadsAndQueues()

@@ -68,9 +68,9 @@ public class EndPointTests
 
         Udp.EndPoint.GetMessage(sendbuf);
         client.Close();
-        server.Stop();
 
         var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get Queue");
         Assert.Single(qu);
+        Assert.False(server.alive());
     }
 }
