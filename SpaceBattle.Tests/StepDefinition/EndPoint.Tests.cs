@@ -76,7 +76,5 @@ public class EndPointTests
 
         var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get Queue");
         Assert.Single(qu);
-
-        Assert.True(server.isAlive());
     }
 }

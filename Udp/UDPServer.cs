@@ -46,10 +46,6 @@ public class UDPServer
     {
         StartListener();
     }
-    public bool isAlive()
-    {
-        return listenThread!.IsAlive;
-    }
     public static void TableOfThreadsAndQueues()
     {
         var gameToThread = new ConcurrentDictionary<string, string>();
