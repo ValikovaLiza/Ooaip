@@ -23,7 +23,7 @@ public class EndPointTests
         dictOfCommands.TryAdd("start", command);
         dictOfCommands.TryAdd("stop", command);
         dictOfCommands.TryAdd("spin", command);
-        IoC.Resolve<ICommand>("IoC.Register", "Get CommandsDict", (object[] args) => dictOfCommands).Execute();
+        IoC.Resolve<Hwdtech.ICommand>("IoC.Register", "Get CommandsDict", (object[] args) => dictOfCommands).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "Send Message",
         (object[] args) =>
@@ -42,14 +42,22 @@ public class EndPointTests
     [Fact]
     public void MessageWasRecivedAndAddedToNessesaryQueue()
     {
-        var client = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
 
         UDPServer.TableOfThreadsAndQueues();
-        var server = new UDPServer();
-        server.Main();
+
+        var listenport = 11103;
+        var server = new UDPServer(listenport);
+        var checkStart = new ManualResetEvent(false);
+        server.UpdateHookBefore(() => checkStart.Set());
+        var checkStop = new ManualResetEvent(false);
+        server.UpdateHookAfter(() => checkStop.Set());
+        server.Start();
+
+        var client = new UdpClient();
+
+        checkStart.WaitOne();
 
         var message = new CommandData
         {
@@ -60,19 +68,18 @@ public class EndPointTests
         var s = JsonConvert.SerializeObject(message, Formatting.Indented);
         var sendbuf = Encoding.ASCII.GetBytes(s);
 
-        var ep = new IPEndPoint(IPAddress.Parse("192.168.1.33"), 11000);
+        var ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), listenport);
 
-        client.Connect(ep);
-        client.Blocking = false;
-
-        client.SendTo(sendbuf, ep);
-
+        client.Send(sendbuf, sendbuf.Length, ep);
         var message2 = Encoding.ASCII.GetBytes("STOP");
-        client.SendTo(message2, ep);
+        client.Send(message2, message2.Length, ep);
 
-        client.Close();
+        checkStop.WaitOne();
 
         Udp.EndPoint.GetMessage(sendbuf);
+        client.Close();
+
+        server.Stop();
 
         var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get Queue");
         Assert.Single(qu);

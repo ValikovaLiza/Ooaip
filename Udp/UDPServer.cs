@@ -1,51 +1,69 @@
 ﻿using System.Collections.Concurrent;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Hwdtech;
 
+namespace Udp;
 public class UDPServer
 {
-    private Thread? listenThread;
-    private Socket? _socket;
+    private readonly Thread _listenThread;
+    private Action _HookAfter = () => { };
+    private Action _HookBefore = () => { };
+    private readonly int _listenPort;
 
-    public UDPServer()
+    private bool running = true;
+
+    public UDPServer(int port)
     {
-        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-    }
-
-    private void StartListener()
-    {
-        IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-        var bytes = new byte[1024];
-
-        listenThread = new Thread(() =>
+        _listenPort = port;
+        var listener = new UdpClient(_listenPort);
+        var RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, _listenPort);
+        _listenThread = new Thread(() =>
         {
             try
             {
-                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")))
+                IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
+
+                _HookBefore();
+                var bytes = new byte[1024];
+
+                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")) && running)
                 {
-                    _socket.Receive(bytes);
+                    bytes = listener.Receive(ref RemoteIpEndPoint);
                 }
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
             }
             finally
             {
-                _socket.Shutdown(SocketShutdown.Receive);
+                listener.Close();
+                _HookAfter();
             }
         });
-
-        listenThread.Start();
     }
 
-    public void Main()
+    public void Start()
     {
-        StartListener();
+        _listenThread.Start();
     }
+
+    public void UpdateHookAfter(Action NewHookAfter)
+    {
+        _HookAfter = NewHookAfter;
+    }
+
+    public void UpdateHookBefore(Action NewHookBefore)
+    {
+        _HookBefore = NewHookBefore;
+    }
+    public void Stop()
+    {
+        running = false;
+    }
+
     public static void TableOfThreadsAndQueues()
     {
         var gameToThread = new ConcurrentDictionary<string, string>();
