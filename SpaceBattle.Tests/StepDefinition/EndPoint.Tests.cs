@@ -42,10 +42,10 @@ public class EndPointTests
     [Fact]
     public void MessageWasRecivedAndAddedToNessesaryQueue()
     {
+        var client = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
         IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => new ActionCommand(() => { })).Execute();
-
-        var client = new UdpClient();
 
         UDPServer.TableOfThreadsAndQueues();
         var server = new UDPServer();
@@ -62,15 +62,23 @@ public class EndPointTests
 
         var ep = new IPEndPoint(IPAddress.Parse("192.168.1.33"), 11000);
 
-        client.Send(sendbuf, sendbuf.Length, ep);
+        client.Connect(ep);
+        client.Blocking = false;
+
+        client.SendTo(sendbuf, ep);
+
         var message2 = Encoding.ASCII.GetBytes("STOP");
-        client.Send(message2, message2.Length, ep);
-        server.Stop();
+        client.SendTo(message2, ep);
+
+        client.Close();
 
         Udp.EndPoint.GetMessage(sendbuf);
-        client.Close();
 
         var qu = IoC.Resolve<BlockingCollection<_ICommand.ICommand>>("Get Queue");
         Assert.Single(qu);
+
+        server.Stop();
+
+        Assert.True(server.isAlive());
     }
 }

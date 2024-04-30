@@ -1,38 +1,41 @@
 ﻿using System.Collections.Concurrent;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Hwdtech;
 
 public class UDPServer
 {
-    private const int listenPort = 11000;
     private Thread? listenThread;
-    private bool running = true;
+    private Socket? _socket;
+
+    public UDPServer()
+    {
+        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+    }
 
     private void StartListener()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Current"))).Execute();
-        var listener = new UdpClient(listenPort);
-        var groupEP = new IPEndPoint(IPAddress.Any, 0);
+        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+        var bytes = new byte[1024];
 
         listenThread = new Thread(() =>
         {
             try
             {
-                var bytes = new byte[1024];
-                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")) && running)
+                while (!bytes.SequenceEqual(Encoding.ASCII.GetBytes("STOP")))
                 {
-                    bytes = listener.Receive(ref groupEP);
+                    _socket.Receive(bytes);
                 }
             }
             catch (Exception e)
             {
-                IoC.Resolve<_ICommand.ICommand>("ExceptionHandler.Handle", e).Execute();
+                Console.WriteLine(e.Message);
             }
             finally
             {
-                listener.Close();
+                _socket.Shutdown(SocketShutdown.Receive);
             }
         });
 
@@ -45,7 +48,11 @@ public class UDPServer
     }
     public void Stop()
     {
-        running = false;
+        _socket?.Close();
+    }
+    public bool isAlive()
+    {
+        return listenThread!.IsAlive;
     }
     public static void TableOfThreadsAndQueues()
     {
