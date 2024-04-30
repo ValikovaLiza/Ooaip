@@ -46,10 +46,6 @@ public class UDPServer
     {
         StartListener();
     }
-    public void Stop()
-    {
-        _socket?.Close();
-    }
     public bool isAlive()
     {
         return listenThread!.IsAlive;
