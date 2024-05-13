@@ -177,27 +177,6 @@
         }
       }
     },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\ActionCommand.cs": {
-      "SpaceBattle.ActionCommand": {
-        "System.Void SpaceBattle.ActionCommand::Execute()": {
-          "Lines": {
-            "12": 24,
-            "13": 24,
-            "14": 22
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ActionCommand::.ctor(System.Action)": {
-          "Lines": {
-            "6": 22,
-            "7": 22,
-            "8": 22,
-            "9": 22
-          },
-          "Branches": []
-        }
-      }
-    },
     "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\BuildingDecisionTrees.cs": {
       "SpaceBattle.BuildingDecisionTrees": {
         "System.Void SpaceBattle.BuildingDecisionTrees::Execute()": {
@@ -298,44 +277,182 @@
         }
       }
     },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\HardStop.cs": {
-      "SpaceBattle.HardStop": {
-        "System.Void SpaceBattle.HardStop::Execute()": {
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\Game.CreateNew.Strategy.cs": {
+      "SpaceBattle.CreateNewGame": {
+        "System.Object SpaceBattle.CreateNewGame::Strategy(System.Object[])": {
           "Lines": {
-            "10": 3,
-            "11": 3,
-            "12": 2,
-            "13": 2,
+            "7": 1,
+            "8": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "15": 1,
+            "16": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\Game.Delete.cs": {
+      "SpaceBattle.Delete": {
+        "System.Void SpaceBattle.Delete::Execute()": {
+          "Lines": {
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1
+          },
+          "Branches": []
+        },
+        "System.Void SpaceBattle.Delete::.ctor(System.String)": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\Game.DeleteObject.cs": {
+      "SpaceBattle.DeleteObject": {
+        "System.Void SpaceBattle.DeleteObject::Execute()": {
+          "Lines": {
+            "13": 1,
+            "14": 1,
+            "15": 1
+          },
+          "Branches": []
+        },
+        "System.Void SpaceBattle.DeleteObject::.ctor(System.Collections.Generic.Dictionary`2<System.String,System.Object>,System.String)": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\Game.GetObject.cs": {
+      "SpaceBattle.GetObject": {
+        "System.Object SpaceBattle.GetObject::Strategy(System.Object[])": {
+          "Lines": {
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\Game.PushToQueue.cs": {
+      "SpaceBattle.GamePushToQueue": {
+        "System.Void SpaceBattle.GamePushToQueue::Execute()": {
+          "Lines": {
+            "13": 1,
+            "14": 1,
+            "15": 1
+          },
+          "Branches": []
+        },
+        "System.Void SpaceBattle.GamePushToQueue::.ctor(System.Collections.Generic.Queue`1<_ICommand.ICommand>,_ICommand.ICommand)": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\Game.ThrowFromQueue.cs": {
+      "SpaceBattle.ThrowFromQueue": {
+        "System.Object SpaceBattle.ThrowFromQueue::Strategy(System.Object[])": {
+          "Lines": {
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\GameCommand.cs": {
+      "SpaceBattle.GameCommand": {
+        "System.Void SpaceBattle.GameCommand::Execute()": {
+          "Lines": {
             "14": 2,
-            "16": 1,
-            "17": 1,
-            "19": 2
+            "15": 2,
+            "16": 2,
+            "17": 2,
+            "18": 2,
+            "19": 2,
+            "21": 49973089,
+            "22": 49973087,
+            "23": 49973087,
+            "24": 4,
+            "25": 4,
+            "27": 4,
+            "28": 4,
+            "29": 3,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 4,
+            "35": 49973087,
+            "36": 2
           },
           "Branches": [
             {
-              "Line": 11,
-              "Offset": 19,
-              "EndOffset": 21,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
+              "Line": 21,
+              "Offset": 206,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 49973087
             },
             {
-              "Line": 11,
-              "Offset": 19,
-              "EndOffset": 37,
+              "Line": 23,
+              "Offset": 127,
+              "EndOffset": 129,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 23,
+              "Offset": 127,
+              "EndOffset": 189,
               "Path": 1,
               "Ordinal": 1,
-              "Hits": 1
+              "Hits": 49973087
+            },
+            {
+              "Line": 21,
+              "Offset": 206,
+              "EndOffset": 208,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
             }
           ]
         },
-        "System.Void SpaceBattle.HardStop::.ctor(SpaceBattle.ServerThread)": {
+        "System.Void SpaceBattle.GameCommand::.ctor(System.String)": {
           "Lines": {
-            "5": 3,
-            "6": 3,
-            "7": 3,
-            "8": 3
+            "8": 3,
+            "9": 3,
+            "10": 3,
+            "11": 3
           },
           "Branches": []
         }
@@ -419,244 +536,27 @@
         }
       }
     },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\ServerThread.cs": {
-      "SpaceBattle.ServerThread": {
-        "System.Void SpaceBattle.ServerThread::Execute()": {
+    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\QueueAdapter.cs": {
+      "SpaceBattle.QueueAdapter": {
+        "_ICommand.ICommand SpaceBattle.QueueAdapter::Receive()": {
           "Lines": {
-            "46": 4,
-            "47": 4,
-            "48": 4
+            "10": 4,
+            "11": 4,
+            "12": 4
           },
           "Branches": []
         },
-        "System.Void SpaceBattle.ServerThread::Stop()": {
+        "System.Boolean SpaceBattle.QueueAdapter::isEmpty()": {
           "Lines": {
-            "50": 4,
-            "51": 4,
-            "52": 4
+            "15": 49973087,
+            "16": 49973087,
+            "17": 49973087
           },
           "Branches": []
         },
-        "System.Void SpaceBattle.ServerThread::UpdateBehavior(System.Action)": {
+        "System.Void SpaceBattle.QueueAdapter::.ctor(System.Collections.Generic.Queue`1<_ICommand.ICommand>)": {
           "Lines": {
-            "54": 2,
-            "55": 2,
-            "56": 2
-          },
-          "Branches": []
-        },
-        "System.Boolean SpaceBattle.ServerThread::Equals(System.Object)": {
-          "Lines": {
-            "62": 9,
-            "63": 9,
-            "64": 1,
-            "65": 1,
-            "68": 8,
-            "69": 6,
-            "70": 6,
-            "73": 2,
-            "74": 1,
-            "75": 1,
-            "78": 1,
-            "79": 9
-          },
-          "Branches": [
-            {
-              "Line": 63,
-              "Offset": 7,
-              "EndOffset": 9,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 63,
-              "Offset": 7,
-              "EndOffset": 14,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 8
-            },
-            {
-              "Line": 68,
-              "Offset": 37,
-              "EndOffset": 39,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 6
-            },
-            {
-              "Line": 68,
-              "Offset": 37,
-              "EndOffset": 57,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 2
-            },
-            {
-              "Line": 73,
-              "Offset": 76,
-              "EndOffset": 78,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 1
-            },
-            {
-              "Line": 73,
-              "Offset": 76,
-              "EndOffset": 83,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 1
-            }
-          ]
-        },
-        "System.Int32 SpaceBattle.ServerThread::GetHashCode()": {
-          "Lines": {
-            "82": 2,
-            "83": 2,
-            "84": 2
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ServerThread::<.ctor>b__5_0()": {
-          "Lines": {
-            "20": 7,
-            "21": 7,
-            "23": 7,
-            "24": 7,
-            "25": 6,
-            "26": 1,
-            "27": 1,
-            "28": 1,
-            "29": 1,
-            "30": 17
-          },
-          "Branches": []
-        },
-        "System.Void SpaceBattle.ServerThread::<.ctor>b__5_1()": {
-          "Lines": {
-            "32": 4,
-            "33": 4,
-            "35": 15,
-            "36": 11,
-            "37": 11,
-            "38": 11,
-            "41": 14
-          },
-          "Branches": [
-            {
-              "Line": 35,
-              "Offset": 59,
-              "EndOffset": 34,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 11
-            },
-            {
-              "Line": 35,
-              "Offset": 59,
-              "EndOffset": 61,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 4
-            }
-          ]
-        },
-        "System.Void SpaceBattle.ServerThread::.ctor(System.Collections.Concurrent.BlockingCollection`1<_ICommand.ICommand>,System.Object)": {
-          "Lines": {
-            "10": 10,
-            "15": 10,
-            "16": 10,
-            "17": 10,
-            "18": 10,
-            "19": 10,
-            "22": 10,
-            "31": 10,
-            "34": 10,
-            "39": 10,
-            "40": 10,
-            "43": 10
-          },
-          "Branches": []
-        }
-      }
-    },
-    "C:\\Users\\liza5\\C#\\Ooaip\\SpaceBattle\\SoftStop.cs": {
-      "SpaceBattle.SoftStop": {
-        "System.Void SpaceBattle.SoftStop::Execute()": {
-          "Lines": {
-            "16": 3,
-            "17": 3,
-            "18": 3,
-            "19": 2,
-            "20": 2,
-            "21": 4,
-            "22": 4,
-            "23": 2,
-            "24": 2,
-            "25": 2,
-            "26": 2,
-            "27": 2,
-            "28": 1,
-            "29": 1,
-            "30": 1,
-            "31": 1,
-            "32": 1,
-            "33": 2,
-            "34": 2,
-            "35": 2,
-            "36": 2,
-            "37": 2,
-            "38": 6,
-            "39": 2,
-            "41": 1,
-            "42": 1,
-            "44": 2
-          },
-          "Branches": [
-            {
-              "Line": 18,
-              "Offset": 53,
-              "EndOffset": 55,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 18,
-              "Offset": 53,
-              "EndOffset": 83,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 1
-            },
-            {
-              "Line": 22,
-              "Offset": 16,
-              "EndOffset": 18,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 2
-            },
-            {
-              "Line": 22,
-              "Offset": 16,
-              "EndOffset": 80,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 2
-            }
-          ]
-        },
-        "System.Void SpaceBattle.SoftStop::.ctor(SpaceBattle.ServerThread,System.Action)": {
-          "Lines": {
-            "8": 3,
-            "10": 3,
-            "11": 3,
-            "12": 3,
-            "13": 3,
-            "14": 3
+            "7": 4
           },
           "Branches": []
         }
