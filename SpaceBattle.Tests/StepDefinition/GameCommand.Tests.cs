@@ -1,51 +1,156 @@
-namespace SpaceBattle.Lib.Test;
+﻿namespace SpaceBattle.Test;
 using System.Collections.Generic;
 using Hwdtech;
+using Hwdtech.Ioc;
+using Moq;
+using SpaceBattle.Tests;
 using Xunit;
 
-public class CreateDeleteGameTest
+public class GameTest
 {
-    Dictionary<string, object> scopeMap = new Dictionary<string, object>() {
-        {"scope1", 123},
-        {"scope2", 321},
-        {"scope3", 132}
+    public readonly Dictionary<string, object> scopeMap = new Dictionary<string, object>() {
+        {"TheFirst", 1},
+        {"TheSecond", 2},
+        {"TheThird", 3}
     };
-    public CreateDeleteGameTest()
+    public Dictionary<string, IReceiver> dictReceivers = new();
+    public Dictionary<string, TimeSpan> dictTimes = new();
+
+    public GameTest()
     {
-        new Hwdtech.Ioc.InitScopeBasedIoCImplementationCommand();
+        new InitScopeBasedIoCImplementationCommand().Execute();
         var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
         IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
 
-        IoC.Resolve<ICommand>("IoC.Register", "Game.Get.GamesDictioanary", (object[] args) =>
+        IoC.Resolve<ICommand>("IoC.Register", "Get Dict Of Games", (object[] args) =>
         {
-            return new Dictionary<string, Queue<Lib.ICommand>>();
+            return new Dictionary<string, Queue<_ICommand.ICommand>>();
         }).Execute();
 
-        IoC.Resolve<ICommand>("IoC.Register", "Game.ScopeMap", (object[] args) =>
+        IoC.Resolve<ICommand>("IoC.Register", "ScopeMap", (object[] args) =>
         {
             return scopeMap;
         }).Execute();
+
+        var getTimeStrategy = new Mock<IStrategy>();
+        getTimeStrategy.Setup(s => s.Strategy(It.IsAny<object[]>())).Returns((object[] args) => dictTimes[(string)args[0]]);
+        IoC.Resolve<ICommand>("IoC.Register", "GetTime", (object[] args) => getTimeStrategy.Object.Strategy(args)).Execute();
+
+        var getReceiverStrategy = new Mock<IStrategy>();
+        getReceiverStrategy.Setup(s => s.Strategy(It.IsAny<object[]>())).Returns((object[] args) => dictReceivers[(string)args[0]]);
+        IoC.Resolve<ICommand>("IoC.Register", "GetReceiver", (object[] args) => getReceiverStrategy.Object.Strategy(args)).Execute();
+
+        IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler", (object[] args) =>
+        {
+            return new ActionCommand(() => { });
+        }).Execute();
+
+        var getScopeStrategy = new Mock<IStrategy>();
+        getScopeStrategy.Setup(s => s.Strategy(It.IsAny<object[]>())).Returns((object[] args) => scope);
+        IoC.Resolve<ICommand>("IoC.Register", "GetScope", (object[] args) => getScopeStrategy.Object.Strategy(args)).Execute();
     }
     [Fact]
     public void Test_DeleteGame()
     {
-        string gameId = "scope2";
-        var deleteCommand = new DeleteGameCommand(gameId);
+        var gameId = "TheSecond";
+        var deleteCommand = new Delete(gameId);
         deleteCommand.Execute();
 
-        var scopeMap = IoC.Resolve<Dictionary<string, object>>("Game.ScopeMap");
+        var scopeMap = IoC.Resolve<Dictionary<string, object>>("ScopeMap");
         Assert.False(scopeMap.ContainsKey(gameId));
 
     }
     [Fact]
     public void Test_CreateGame()
     {
-        string gameId = "123";
+        var gameId = "1";
 
-        var createGameStrategy = new CreateNewStrategy();
-        var result = createGameStrategy.Execute(gameId);
+        var createGameStrategy = new CreateNewGame();
+        var result = createGameStrategy.Strategy(gameId);
 
         Assert.NotNull(result);
         Assert.IsType<GameCommand>(result);
+    }
+    [Fact]
+    public void Test_GameObjectsDeleteGet()
+    {
+        var gameItemId = "1";
+        var obj = new object();
+        var objects = new Dictionary<string, object>()
+        {
+            { gameItemId, obj }
+        };
+
+        var result = new GetObject().Strategy(objects, gameItemId);
+        Assert.Equal(obj, result);
+
+        new DeleteObject(objects, gameItemId).Execute();
+        Assert.DoesNotContain(gameItemId, objects.Keys);
+    }
+    [Fact]
+    public void Test_GameQueuePushAndPop()
+    {
+        var commandMock = new Mock<_ICommand.ICommand>();
+        var commandQueueMock = new Mock<Queue<_ICommand.ICommand>>();
+
+        new GamePushToQueue(commandQueueMock.Object, commandMock.Object).Execute();
+        Assert.True(commandQueueMock.Object.Contains(commandMock.Object));
+
+        var command = new ThrowFromQueue().Strategy(commandQueueMock.Object);
+        Assert.Equal(command, commandMock.Object);
+    }
+    [Fact]
+    public void GameCommandTest()
+    {
+        var cmd1 = new Mock<_ICommand.ICommand>();
+        cmd1.Setup(c => c.Execute()).Verifiable();
+        var cmd2 = new Mock<_ICommand.ICommand>();
+        cmd2.Setup(c => c.Execute()).Verifiable();
+        var cmd3 = new Mock<_ICommand.ICommand>();
+        cmd3.Setup(c => c.Execute()).Verifiable();
+
+        var listCmds = new List<_ICommand.ICommand>() { cmd1.Object, cmd2.Object, cmd3.Object };
+
+        dictReceivers.Add("1", new QueueAdapter(new Queue<_ICommand.ICommand>(listCmds)));
+        dictTimes.Add("1", TimeSpan.FromSeconds(3));
+
+        var game = new GameCommand("1");
+        game.Execute();
+
+        cmd1.Verify(c => c.Execute(), Times.Once());
+        cmd2.Verify(c => c.Execute(), Times.Once());
+        cmd3.Verify(c => c.Execute(), Times.Once());
+    }
+
+    [Fact]
+    public void GameCommandExceptionTest()
+    {
+        var cmd = new Mock<_ICommand.ICommand>();
+        cmd.Setup(c => c.Execute()).Throws<Exception>().Verifiable();
+        var listCmds = new List<_ICommand.ICommand>() { cmd.Object };
+
+        dictReceivers.Add("2", new QueueAdapter(new Queue<_ICommand.ICommand>(listCmds)));
+        dictTimes.Add("2", TimeSpan.FromSeconds(3));
+
+        var game = new GameCommand("2");
+        game.Execute();
+
+        cmd.Verify();
+    }
+
+    [Fact]
+    public void ExceptionHandlerTest()
+    {
+        var count = 0;
+        var exc = new Exception("101");
+        var cmd = new Mock<_ICommand.ICommand>();
+        var unused = cmd.Setup(c => c.Execute()).Throws(() => exc);
+
+        var str = new Mock<IStrategy>();
+        str.Setup(s => s.Strategy()).Callback(() => count++);
+
+        IoC.Resolve<ICommand>("ExceptionHandler", cmd.Object, exc).Execute();
+
+        cmd.Verify();
     }
 }

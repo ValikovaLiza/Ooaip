@@ -1,4 +1,4 @@
-using Hwdtech;
+﻿using Hwdtech;
 
 namespace SpaceBattle;
 public class Delete : _ICommand.ICommand
@@ -10,7 +10,7 @@ public class Delete : _ICommand.ICommand
     }
     public void Execute()
     {
-        var scopeMap = IoC.Resolve<Dictionary<string, object>>("Game.ScopeMap");
+        var scopeMap = IoC.Resolve<Dictionary<string, object>>("ScopeMap");
         scopeMap.Remove(gameId);
     }
 }

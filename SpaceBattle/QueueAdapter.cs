@@ -1,8 +1,8 @@
-namespace SpaceBattle;
+﻿namespace SpaceBattle;
 
 public class QueueAdapter : IReceiver
 {
-    Queue<_ICommand.ICommand> queue;
+    public Queue<_ICommand.ICommand> queue;
 
     public QueueAdapter(Queue<_ICommand.ICommand> queue) => this.queue = queue;
 
